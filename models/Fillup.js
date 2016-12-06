@@ -14,17 +14,17 @@ var FillupSchema = new Schema({
     // give the option of odometer readings, but for now will use
     // miles (use your tripodometer!)
     miles: {
-        type: Double,
+        type: Number,
         required: true
     },
     // Gallons for the fill up
     gallons: {
-        type: Double,
+        type: Number,
         required: true
     },
     // Price per gallon, is optional
     price: {
-        type: Double,
+        type: Number,
         required: false
     },
     // Flag to set if it was a partial fillup

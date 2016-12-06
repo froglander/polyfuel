@@ -22,7 +22,7 @@ var UserSchema = new Schema({
     },
     // Zip code to know approximate area of country
     zip: {
-        type: Integer,
+        type: String,
         required: false
     }
 });

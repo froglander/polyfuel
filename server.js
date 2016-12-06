@@ -7,13 +7,13 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 
 // Require Mongo schemas
-var Fillup = require('./models/Fillup');
-var Vehicle = require('./models/Vehicle');
-var User = require('./models/User');
+const Fillup = require('./models/Fillup');
+const Vehicle = require('./models/Vehicle');
+const User = require('./models/User');
 
 // Set up Express
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Set up Morgan for logging
 app.use(logger('dev'));
@@ -45,7 +45,8 @@ db.once('open', function() {
 /* ************************************************************************ */
 // Main route
 app.get('/', function(req, res) {
-    res.sendFile('./public/index.html');
+    // res.sendFile('./public/index.html');
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
 

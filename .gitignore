@@ -40,5 +40,5 @@ jspm_packages
 yarn.lock
 
 .idea
-.idea/jsLibraryMappings.xml
 
+public/bundle.js

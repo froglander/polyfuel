@@ -22,7 +22,7 @@ var VehicleSchema = new Schema({
     },
     // Year of vehicle
     year: {
-        type: Integer,
+        type: Number,
         required: false
     },
     // Trim level of vehicle
@@ -31,11 +31,11 @@ var VehicleSchema = new Schema({
     },
     // This will be populated from Edmunds API
     cityMPG: {
-        type: Integer
+        type: Number
     },
     // This will be populated from Edmunds API
     hwyMGP: {
-        type: Integer
+        type: Number
     },
     // Each vehicle belongs to a single user
     user_id : {
