@@ -7,6 +7,9 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 
 // Require Mongo schemas
+var Fillup = require('./models/Fillup');
+var Vehicle = require('./models/Vehicle');
+var User = require('./models/User');
 
 // Set up Express
 var app = express();
@@ -44,6 +47,8 @@ db.once('open', function() {
 app.get('/', function(req, res) {
     res.sendFile('./public/index.html');
 });
+
+
 
 // Set app to listen
 app.listen(PORT, function() {
