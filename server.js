@@ -49,7 +49,36 @@ app.get('/', function(req, res) {
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
+// POST a fill-up to save
+app.post('/api/save', function(req, res){
+    console.log("Post a fill-up to save");
 
+    var newFillUp = new Fillup(req.body);
+
+    console.log(req.body)
+
+    // miles: fillMiles,
+    //     gallons: fillGals,
+    //     price: fillPrice,
+    //     partial: fillPartial,
+    //     vehicle_id: fillVehId
+
+
+    // var miles = req.body.miles;
+    // var gallons = req.body.date;
+    // var price = req.body.url;
+    // var partial =;
+    // var vehicle_id = ;
+
+    // newArticle.save(function(err, doc){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         // Return mongoose id of documente saved
+    //         res.send(doc._id);
+    //     }
+    // });
+});
 
 // Set app to listen
 app.listen(PORT, function() {
