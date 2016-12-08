@@ -1,19 +1,22 @@
 /* ************************************************************************ */
 /*                             Server dependencies                          */
 /* ************************************************************************ */
-const express = require('express');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const mongoose = require('mongoose');
+var express = require('express');
+
+var path = require('path');
+
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var mongoose = require('mongoose');
 
 // Require Mongo schemas
-const Fillup = require('./models/Fillup');
-const Vehicle = require('./models/Vehicle');
-const User = require('./models/User');
+var Fillup = require('./models/Fillup');
+var Vehicle = require('./models/Vehicle');
+var User = require('./models/User');
 
 // Set up Express
-const app = express();
-const PORT = process.env.PORT || 3000;
+var app = express();
+var PORT = process.env.PORT || 3000;
 
 // Set up Morgan for logging
 app.use(logger('dev'));
@@ -55,7 +58,7 @@ app.post('/api/save', function(req, res){
 
     var newFillUp = new Fillup(req.body);
 
-    console.log(req.body)
+    console.log(req.body);
 
     // miles: fillMiles,
     //     gallons: fillGals,

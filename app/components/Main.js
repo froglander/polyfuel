@@ -7,15 +7,17 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
+var Link = ReactRouter.Link;
 
 // Include all sub-components
 // var Search = require('./Search');
 var AddFillup = require('./AddFillup');
+var SignIn = require('./SignIn');
 
 
 var Main = React.createClass({
     // Set initial state
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             miles: "",
             gallons: "",
@@ -25,7 +27,7 @@ var Main = React.createClass({
         }
     },
     // Set the state for the search terms
-    setFillup: function(fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
+    setFillup: function (fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
         console.log("set fill up");
         this.setState({
             miles: fillMiles,
@@ -33,7 +35,7 @@ var Main = React.createClass({
             price: fillPrice,
             partial: fillPartial,
             vehicle_id: fillVehId
-        }, function() {
+        }, function () {
             console.log("main miles:", this.state.miles);
             console.log("main gallons:", this.state.gallons);
             console.log("main price:", this.state.price);
@@ -46,8 +48,34 @@ var Main = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <div className="jumbotron">header</div>
-                <AddFillup newFillUp={this.setFillup} />
+                <nav className="navbar navbar-default">
+                    <div className="container-fluid">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#poly-nav-collapse" aria-expanded="false">
+                                <span className="sr-only">Toggle navigation</span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            {/*<a className="navbar-brand" href="#">Polyfuel</a>*/}
+                            <Link activeClassName={} to="/">Polyfuel</Link>
+                        </div>
+                        <div className="collapse navbar-collapse" id="poly-nav-collapse">
+                            <ul className="nav navbar-nav">
+                                <li><Link to="/DisplayMpg">1 View Details</Link></li>
+                                <li><Link to="/AddFillup">Add Fill-Up</Link></li>
+                                <li><Link to="/">View Vehicles</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                {/*<div className="jumbotron">polyfuel Main</div>*/}
+                <div className="row">
+                    {this.props.children}
+                </div>
+                {/*<AddFillup newFillUp={this.setFillup} />*/}
 
                 {/*<DisplayMpg results={this.state.results} />*/}
             </div>

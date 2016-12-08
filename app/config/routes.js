@@ -11,6 +11,7 @@ var IndexRoute	= Router.IndexRoute;
 // Reference the high-level components
 var Main = require('../components/Main');
 var AddFillup = require('../components/AddFillup');
+var SignIn = require('../components/SignIn');
 
 
 // Export the Routes
@@ -19,12 +20,13 @@ module.exports = (
     /*High level component is the Main component*/
     <Route path='/' component={Main}>
 
-        {/* If user selects Search or Saved show the appropriate component*/}
-        {/*<Route path='Search' component={Search} />*/}
-        {/*<Route path='Saved' component={Saved} />*/}
+        {/* Once the user signs in display fill up info*/}
+        <Route path='AddFillup' component={AddFillup} />
+        {/*<Route path='DisplayMpg' component={DisplayMpg} />*/}
 
         {/*If user selects any other path... we get the Info Route*/}
-        <IndexRoute component={AddFillup} />
+        {/*<IndexRoute component={AddFillup} />*/}
+        <IndexRoute component={SignIn} />
 
     </Route>
 
