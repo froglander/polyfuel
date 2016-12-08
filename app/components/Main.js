@@ -59,7 +59,7 @@ var Main = React.createClass({
                                 <span className="icon-bar"></span>
                             </button>
                             {/*<a className="navbar-brand" href="#">Polyfuel</a>*/}
-                            <Link activeClassName={} to="/">Polyfuel</Link>
+                            <Link to="/">Polyfuel</Link>
                         </div>
                         <div className="collapse navbar-collapse" id="poly-nav-collapse">
                             <ul className="nav navbar-nav">
