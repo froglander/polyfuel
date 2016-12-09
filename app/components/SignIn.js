@@ -2,6 +2,8 @@
 var React = require('react');
 var axios = require('axios');
 
+var LabeledField = require('./LabeledField');
+
 
 var SignIn = React.createClass({
 
@@ -11,13 +13,13 @@ var SignIn = React.createClass({
             username: "",
         }
     },
-    handleChange: function(e) {
+    handleChange: function (e) {
         console.log("input field changed");
         var changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
     },
-    handleSubmit: function() {
+    handleSubmit: function () {
         console.log("Submit clicked");
 
         this.props.newSignIn(this.state.username);
@@ -40,20 +42,13 @@ var SignIn = React.createClass({
                             </div>
                             <div className="panel-body">
                                 <form className="form-horizontal">
-                                    <div className="form-group">
-                                        <label htmlFor="username" className="col-sm-2 control-label">Username </label>
-                                        <div className="col-sm-10">
-                                            <input type="text" value={this.state.username} className="form-control"
-                                                   id="username" onChange={this.handleChange}/>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="password" className="col-sm-2 control-label">Password</label>
-                                        <div className="col-sm-10">
-                                            <input type="text" className="form-control"
-                                                   id="password" onChange={this.handleChange}/>
-                                        </div>
-                                    </div>
+
+                                    <LabeledField handleChange={this.handleChange} val={this.state.username}
+                                                  title="Username" labelId="username" inputType="text"/>
+
+                                    <LabeledField handleChange={this.handleChange} val={this.state.password}
+                                                  title="Password" labelId="password" inputType="text"/>
+
                                     <button type="submit" className="btn btn-primary btn-lg btn-block"
                                             onClick={this.handleSubmit}>
                                         Sign In

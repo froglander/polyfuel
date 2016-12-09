@@ -12,6 +12,8 @@ var IndexRoute	= Router.IndexRoute;
 var Main = require('../components/Main');
 var AddFillup = require('../components/AddFillup');
 var SignIn = require('../components/SignIn');
+var DisplayMpg = require('../components/DisplayMpg');
+var AddVehicle = require('../components/AddVehicle');
 
 
 // Export the Routes
@@ -22,7 +24,9 @@ module.exports = (
 
         {/* Once the user signs in display fill up info*/}
         <Route path='AddFillup' component={AddFillup} />
-        {/*<Route path='DisplayMpg' component={DisplayMpg} />*/}
+        <Route path='DisplayMpg' component={DisplayMpg} />
+        <Route path='AddVehicle' component={AddVehicle} />
+
 
         {/*If user selects any other path... we get the Info Route*/}
         {/*<IndexRoute component={AddFillup} />*/}

@@ -63,9 +63,9 @@ var Main = React.createClass({
                         </div>
                         <div className="collapse navbar-collapse" id="poly-nav-collapse">
                             <ul className="nav navbar-nav">
-                                <li><Link to="/DisplayMpg">1 View Details</Link></li>
+                                <li><Link to="/DisplayMpg">View Details</Link></li>
                                 <li><Link to="/AddFillup">Add Fill-Up</Link></li>
-                                <li><Link to="/">View Vehicles</Link></li>
+                                <li><Link to="/AddVehicle">View Vehicles</Link></li>
                             </ul>
                         </div>
                     </div>

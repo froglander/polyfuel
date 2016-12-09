@@ -47,7 +47,7 @@ db.once('open', function() {
 /*                                  Routes                                  */
 /* ************************************************************************ */
 // Main route
-app.get('/', function(req, res) {
+app.get('*', function(req, res) {
     // res.sendFile('./public/index.html');
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
