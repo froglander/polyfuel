@@ -48,35 +48,32 @@ var Main = React.createClass({
     render: function () {
         return (
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                    <div className="col-md-1">col-md-1</div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8">col-md-8</div>
-                    <div className="col-md-4">col-md-4</div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4">col-md-4</div>
-                    <div className="col-md-4">col-md-4</div>
-                    <div className="col-md-4">col-md-4</div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4">col-md-6</div>
-                    <div className="col-md-4">col-md-6</div>
-                </div>
+                <nav className="navbar navbar-default">
+                    <div className="container-fluid">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#poly-nav-collapse" aria-expanded="false">
+                                <span className="sr-only">Toggle navigation</span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            {/*<a className="navbar-brand" href="#">Polyfuel</a>*/}
+                            <Link to="/">Polyfuel</Link>
+                        </div>
+                        <div className="collapse navbar-collapse" id="poly-nav-collapse">
+                            <ul className="nav navbar-nav">
+                                <li><Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">View Details</Link></li>
+                                <li><Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">Add Fill-Up</Link></li>
+                                <li><Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">View Vehicles</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
 
-
+                <div className="row">
+                    {this.props.children}
+                </div>
             </div>
         )
     }
