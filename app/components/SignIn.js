@@ -35,7 +35,7 @@ var SignIn = React.createClass({
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h3 className="panel-title">Sign In</h3>

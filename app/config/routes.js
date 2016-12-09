@@ -29,7 +29,6 @@ module.exports = (
 
 
         {/*If user selects any other path... we get the Info Route*/}
-        {/*<IndexRoute component={AddFillup} />*/}
         <IndexRoute component={SignIn} />
 
     </Route>

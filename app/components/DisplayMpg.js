@@ -50,13 +50,14 @@ var AddFillup = React.createClass({
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h3 className="panel-title">Details</h3>
                             </div>
                             <div className="panel-body">
-                                this is where I will display the average mpg, a graph, a
+                                <p>this is where I will display the average mpg, a graph, and buttons to add fill-ups for
+                                other vehicles</p>
 
                             </div>
                         </div>

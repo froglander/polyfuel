@@ -5,16 +5,17 @@ var axios = require('axios');
 var LabeledField = require('./LabeledField');
 
 
-var AddFillup = React.createClass({
+var AddVehicle = React.createClass({
 
     // Set initial state
     getInitialState: function () {
         return {
-            miles: "",
-            gallons: "",
-            price: "",
-            partial: false,
-            vehicle_id: ""
+            make: "",
+            model: "",
+            year: "",
+            trim: "",
+            cityMPG: "",
+            hwyMPG: "",
         }
 
     },
@@ -26,55 +27,43 @@ var AddFillup = React.createClass({
     },
     handleSubmit: function () {
         console.log("Submit clicked");
-        this.props.newFillUp(this.state.miles, this.state.gallons, this.state.price, this.state.partial, this.state.vehicle_id);
-
-        console.log("add fillup: miles:", this.state.miles);
-        console.log("gallons:", this.state.gallons);
-        console.log("price:", this.state.price);
-
-        // var newFillUp = {miles: thisItem.headline.main, date: thisItem.pub_date, url: thisItem.web_url };
-        // // console.log("click article:", newArticle);
-        // return axios.post('/api/saved', newArticle)
-        //     .then(function(results) {
-        //         console.log("mongoose id:", results.data);
-        //         return results.data;
-        //     }.bind(this))
-
+        // this.props.newFillUp(this.state.miles, this.state.gallons, this.state.price, this.state.partial, this.state.vehicle_id);
+        //
+        // console.log("add fillup: miles:", this.state.miles);
+        // console.log("gallons:", this.state.gallons);
+        // console.log("price:", this.state.price);
 
         return false;
     },
     // Here we render the component
     render: function () {
-        console.log("Render add fill up component");
+        console.log("Render add vehicle component");
 
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-heading">
-                                <h3 className="panel-title">New Fill-Up</h3>
+                                <h3 className="panel-title">Add New Vehicle</h3>
                             </div>
                             <div className="panel-body">
                                 <form className="form-horizontal">
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.miles}
-                                                  title="Miles" labelId="miles" inputType="text"/>
+                                    <LabeledField handleChange={this.handleChange} val={this.state.year}
+                                                  title="Year" labelId="year" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.gallons}
-                                                  title="Gallons" labelId="gallons" inputType="text"/>
+                                    <LabeledField handleChange={this.handleChange} val={this.state.make}
+                                                  title="Make" labelId="make" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.price}
-                                                  title="Price" labelId="price" inputType="text"/>
+                                    <LabeledField handleChange={this.handleChange} val={this.state.model}
+                                                  title="Model" labelId="model" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.partial}
-                                                  title="Partial Fill-Up" labelId="partial" inputType="checkbox"/>
-
-                                    <LabeledField handleChange={this.handleChange} val={this.state.vehicle_id}
-                                                  title="Vehicle" labelId="vehicle_id" inputType="text"/>
+                                    <LabeledField handleChange={this.handleChange} val={this.state.trim}
+                                                  title="trim" labelId="trim" inputType="text"/>
 
                                     <button type="submit" className="btn btn-primary btn-lg btn-block"
-                                            onClick={this.handleSubmit}>Add Fill-Up
+                                            onClick={this.handleSubmit}>Save Vehicle
                                     </button>
                                 </form>
                             </div>
@@ -87,4 +76,4 @@ var AddFillup = React.createClass({
 });
 
 // Export the component back for use in other files
-module.exports = AddFillup;
+module.exports = AddVehicle;
