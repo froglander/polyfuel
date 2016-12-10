@@ -5,8 +5,6 @@ var ReactDOM = require('react-dom');
 // Grab the property associated with the Router
 var Router = require('react-router').Router;
 
-
-// import {browserHistory} from 'react-router'
 var browserHistory = require('react-router').browserHistory;
 
 // Grabs the Routes

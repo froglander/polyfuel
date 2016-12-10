@@ -10,7 +10,6 @@ var IndexRoute = ReactRouter.IndexRoute;
 var Link = ReactRouter.Link;
 
 // Include all sub-components
-// var Search = require('./Search');
 var AddFillup = require('./AddFillup');
 var SignIn = require('./SignIn');
 
@@ -26,6 +25,20 @@ var Main = React.createClass({
             vehicle_id: ""
         }
     },
+    // Not sure if this is in the right place
+    // https://medium.com/the-many/adding-login-and-authentication-sections-to-your-react-or-react-native-app-7767fd251bd1#.iihztz9th
+    // componentDidUpdate: function(prevProps) {
+    //     var dispatch = this.props.dispatch;
+    //     var redirectUrl = this.props.redirectUrl;
+    //     var isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn
+    //     var isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn
+    //
+    //     if(isLoggingIn) {
+    //         dispatch(navigateTo(redirectUrl))
+    //     } else if (isLoggingOut) {
+    //         // add cleanup or post logout redirect
+    //     }
+    // },
     // Set the state for the search terms
     setFillup: function (fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
         console.log("set fill up");

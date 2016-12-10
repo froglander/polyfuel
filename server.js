@@ -10,9 +10,9 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 
 // for authentication
-var passport = require('passport');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
+// var passport = require('passport');
+// var session = require('express-session');
+// var cookieParser = require('cookie-parser');
 
 // Require Mongo schemas
 var Fillup = require('./models/Fillup');
@@ -30,12 +30,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // required for passport
-app.use(session({ secret: 'puppyponypuppypony' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+// app.use(session({ secret: 'puppyponypuppypony' })); // session secret
+// app.use(passport.initialize());
+// app.use(passport.session()); // persistent login sessions
 // app.use(flash()); // use connect-flash for flash messages stored in session
 
 // Set up path to static directory for css/imgs/etc
@@ -44,8 +44,8 @@ app.use(express.static('./public'));
 /* ************************************************************************ */
 /*                                 Mongoose                                 */
 /* ************************************************************************ */
-// mongoose.connect('mongodb://localhost/polyfuel1');
-mongoose.connect(' mongodb://heroku_sfwwbczq:3di5msecgg8bj3tq50lpg556k1@ds127988.mlab.com:27988/heroku_sfwwbczq');
+mongoose.connect('mongodb://localhost/polyfuel1');
+// mongoose.connect('mongodb://heroku_sfwwbczq:3di5msecgg8bj3tq50lpg556k1@ds127988.mlab.com:27988/heroku_sfwwbczq');
 
 
 var db = mongoose.connection;
@@ -68,8 +68,8 @@ app.get('*', function(req, res) {
 });
 
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-    failureRedirect: '/login' }));
+// app.post('/login', passport.authenticate('local', { successRedirect: '/',
+//     failureRedirect: '/login' }));
 
 
 // POST a fill-up to save

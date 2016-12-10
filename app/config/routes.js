@@ -6,7 +6,7 @@ var Router = require('react-router');
 var Route = Router.Route;
 
 //  Include the IndexRoute (catch-all route)
-var IndexRoute	= Router.IndexRoute;
+var IndexRoute = Router.IndexRoute;
 
 // Reference the high-level components
 var Main = require('../components/Main');
@@ -15,6 +15,7 @@ var SignIn = require('../components/SignIn');
 var DisplayMpg = require('../components/DisplayMpg');
 var AddVehicle = require('../components/AddVehicle');
 
+var EnsureLoggedInContainer = require('../components/EnsureLoggedInContainer');
 
 // Export the Routes
 module.exports = (
@@ -22,14 +23,16 @@ module.exports = (
     /*High level component is the Main component*/
     <Route path='/' component={Main}>
 
-        {/* Once the user signs in display fill up info*/}
-        <Route path='AddFillup' component={AddFillup} />
-        <Route path='DisplayMpg' component={DisplayMpg} />
-        <Route path='AddVehicle' component={AddVehicle} />
-
-
         {/*If user selects any other path... we get the Info Route*/}
-        <IndexRoute component={SignIn} />
+        <IndexRoute component={SignIn}/>
+
+        {/*<Route component={EnsureLoggedInContainer}>*/}
+            {/* Once the user signs in display fill up info*/}
+            <Route path='AddFillup' component={AddFillup}/>
+            <Route path='DisplayMpg' component={DisplayMpg}/>
+            <Route path='AddVehicle' component={AddVehicle}/>
+        {/*</Route>*/}
+
 
     </Route>
 
