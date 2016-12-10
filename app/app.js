@@ -10,6 +10,8 @@ var browserHistory = require('react-router').browserHistory;
 // Grabs the Routes
 var routes = require('./config/routes');
 
+var App = require('./components/App');
+
 // Renders the contents according to the route page.
 ReactDOM.render(
 

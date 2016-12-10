@@ -24,7 +24,7 @@ module.exports = (
     /*High level component is the Main component*/
     <Route path='/' component={Main}>
 
-        {/*If user selects any other path... we get the Info Route*/}
+        {/*If user selects any other path... we get the IndexRoute*/}
         <IndexRoute component={SignIn}/>
 
         <Route path="SignUp" components={SignUp}/>
