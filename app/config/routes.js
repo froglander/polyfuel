@@ -14,6 +14,7 @@ var AddFillup = require('../components/AddFillup');
 var SignIn = require('../components/SignIn');
 var DisplayMpg = require('../components/DisplayMpg');
 var AddVehicle = require('../components/AddVehicle');
+var SignUp = require('../components/SignUp');
 
 var EnsureLoggedInContainer = require('../components/EnsureLoggedInContainer');
 
@@ -25,6 +26,8 @@ module.exports = (
 
         {/*If user selects any other path... we get the Info Route*/}
         <IndexRoute component={SignIn}/>
+
+        <Route path="SignUp" components={SignUp}/>
 
         {/*<Route component={EnsureLoggedInContainer}>*/}
             {/* Once the user signs in display fill up info*/}

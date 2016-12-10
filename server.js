@@ -50,11 +50,11 @@ mongoose.connect('mongodb://localhost/polyfuel1');
 
 var db = mongoose.connection;
 
-db.on("error", function(err) {
+db.on("error", function (err) {
     console.log("Mongoose error: ", err);
 });
 
-db.once('open', function() {
+db.once('open', function () {
     console.log("Mongoose connection successful");
 });
 
@@ -62,18 +62,45 @@ db.once('open', function() {
 /*                                  Routes                                  */
 /* ************************************************************************ */
 // Main route
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
     // res.sendFile('./public/index.html');
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
+// Sign up route
+app.post('/signup', function (req, res) {
+    //check req.body for username and pass, use them to login with mongoose/msql
+    //     if (err) return res.json(err);
+    // return res.json(user);
+    console.log("Sign up route");
 
-// app.post('/login', passport.authenticate('local', { successRedirect: '/',
-//     failureRedirect: '/login' }));
+    var newUser = new User(req.body);
 
+    console.log(req.body)
+
+    var username = req.body.username;
+    var password = req.body.password;
+
+    newUser.save(function (err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            // Return mongoose id of documente saved
+            res.send(doc._id);
+        }
+    });
+});
+
+
+// Sign in route
+// app.post('/login', function(req, res){
+//     //check req.body for username and pass, use them to login with mongoose/msql
+//     //     if (err) return res.json(err);
+//     // return res.json(user);
+// });
 
 // POST a fill-up to save
-app.post('/api/save', function(req, res){
+app.post('/api/save', function (req, res) {
     console.log("Post a fill-up to save");
 
     var newFillUp = new Fillup(req.body);
@@ -104,6 +131,6 @@ app.post('/api/save', function(req, res){
 });
 
 // Set app to listen
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("App is listening on PORT: ", PORT);
 });

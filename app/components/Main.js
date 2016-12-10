@@ -25,20 +25,53 @@ var Main = React.createClass({
             vehicle_id: ""
         }
     },
-    // Not sure if this is in the right place
-    // https://medium.com/the-many/adding-login-and-authentication-sections-to-your-react-or-react-native-app-7767fd251bd1#.iihztz9th
-    // componentDidUpdate: function(prevProps) {
-    //     var dispatch = this.props.dispatch;
-    //     var redirectUrl = this.props.redirectUrl;
-    //     var isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn
-    //     var isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn
-    //
-    //     if(isLoggingIn) {
-    //         dispatch(navigateTo(redirectUrl))
-    //     } else if (isLoggingOut) {
-    //         // add cleanup or post logout redirect
-    //     }
-    // },
+    signup: function (thisItem, event) {
+        // axios({
+        //     method: 'POST',
+        //     data: {
+        //         username: this.state.username,
+        //         password: this.state.password
+        //     }
+        // }).then(function(user) {
+        //     // If all good, save to database
+        //     var newUser = {username: this.stat}
+        // }, function (error) {
+        //     // If a problem, let me know!
+        // });
+
+
+
+        // handleClick: function(thisItem, event) {
+            // console.log("Click to save article");
+            // console.log(thisItem);
+
+            var newUser = {username: thisItem.username, date: thisItem.password };
+            // console.log("click article:", newArticle);
+            return axios.post('/api/signup', newUser)
+                .then(function(results) {
+                    console.log("mongoose id:", results.data);
+                    return results.data;
+                }.bind(this))
+
+        // },
+
+
+
+
+    },
+    login: function () {
+        axios({
+            method: 'POST',
+            data: {/* user info */}
+        }).then(function (user) {
+            //all good redirect to home/dashboard
+        }, function (error) {
+            //tell them there was an error
+        });
+    },
+
+    /* ********************************* */
+
     // Set the state for the search terms
     setFillup: function (fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
         console.log("set fill up");
@@ -76,9 +109,15 @@ var Main = React.createClass({
                         </div>
                         <div className="collapse navbar-collapse" id="poly-nav-collapse">
                             <ul className="nav navbar-nav">
-                                <li><Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">View Details</Link></li>
-                                <li><Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">Add Fill-Up</Link></li>
-                                <li><Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">View Vehicles</Link></li>
+                                <li><Link to="/SignUp" data-toggle="collapse" data-target=".navbar-collapse.in">Sign
+                                    Up</Link></li>
+
+                                <li><Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">View
+                                    Details</Link></li>
+                                <li><Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">Add
+                                    Fill-Up</Link></li>
+                                <li><Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">View
+                                    Vehicles</Link></li>
                             </ul>
                         </div>
                     </div>
