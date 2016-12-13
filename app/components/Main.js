@@ -51,7 +51,7 @@ var Main = React.createClass({
                 .then(function(results) {
                     console.log("mongoose id:", results.data);
                     return results.data;
-                }.bind(this))
+                }.bind(this));
 
         // },
 

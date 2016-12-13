@@ -39,5 +39,18 @@ module.exports = (
 
     </Route>
 
+//
+//     <Router history={new HashHistory()}>
+//     <Route component={App}>
+//     <Route
+//          path="SignUp"
+//          component={SignUp}
+//          signup={this.signUp}
+//     />
+// <IndexRoute component={SignIn} login={this.login}/>
+// </Route>
+// </Router>
+
+
 
 );

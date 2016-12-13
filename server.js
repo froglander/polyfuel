@@ -103,7 +103,7 @@ app.post('/signup', function (req, res) {
 app.post('/api/save', function (req, res) {
     console.log("Post a fill-up to save");
 
-    var newFillUp = new Fillup(req.body);
+    //var newFillUp = new Fillup(req.body);
 
     console.log(req.body);
 
@@ -119,6 +119,15 @@ app.post('/api/save', function (req, res) {
     // var price = req.body.url;
     // var partial =;
     // var vehicle_id = ;
+    var newFillUp = new Fillup(req.body);
+
+    newFillUp.save(function(err, doc) {
+        if(err) {
+            console.log("Error: ", err);
+        } else {
+            res.send(doc._id);
+        }
+    });
 
     // newArticle.save(function(err, doc){
     //     if(err){

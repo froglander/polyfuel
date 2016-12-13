@@ -25,23 +25,26 @@ var AddFillup = React.createClass({
         this.setState(changedState);
     },
     handleSubmit: function () {
-        console.log("Submit clicked");
-        this.props.newFillUp(this.state.miles, this.state.gallons, this.state.price, this.state.partial, this.state.vehicle_id);
-
+        console.log("Submit button clicked");
         console.log("add fillup: miles:", this.state.miles);
         console.log("gallons:", this.state.gallons);
         console.log("price:", this.state.price);
 
-        // var newFillUp = {miles: thisItem.headline.main, date: thisItem.pub_date, url: thisItem.web_url };
-        // // console.log("click article:", newArticle);
-        // return axios.post('/api/saved', newArticle)
-        //     .then(function(results) {
-        //         console.log("mongoose id:", results.data);
-        //         return results.data;
-        //     }.bind(this))
+        var newFillUp = {
+            miles: this.state.miles,
+            gallons: this.state.gallons,
+            price: this.state.price
+        };
+        console.log("click fill-up:", newFillUp);
+
+        return axios.post('/api/save', newFillUp)
+            .then(function(results) {
+                console.log("mongoose id:", results.data);
+                return results.data;
+            }.bind(this));
 
 
-        return false;
+        // return false;
     },
     // Here we render the component
     render: function () {

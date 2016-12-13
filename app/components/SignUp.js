@@ -30,7 +30,7 @@ var SignUp = React.createClass({
     },
     // Here we render the component
     render: function () {
-        console.log("Render sign in component");
+        console.log("Render sign up component");
 
         return (
             <div className="container">
@@ -49,8 +49,8 @@ var SignUp = React.createClass({
                                     <LabeledField handleChange={this.handleChange} val={this.state.password}
                                                   title="Password" labelId="password" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.password}
-                                                  title="Re-enter Password" labelId="password" inputType="text"/>
+                                    <LabeledField handleChange={this.handleChange}
+                                                  title="Re-enter Password" labelId="password2" inputType="text"/>
 
                                     <button type="submit" className="btn btn-primary btn-lg btn-block"
                                             onClick={this.handleSubmit}>
