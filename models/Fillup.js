@@ -42,4 +42,4 @@ var FillupSchema = new Schema({
 var Fillup = mongoose.model('Fillup', FillupSchema);
 
 // Export the model
-module.exports = Fillup;
+module.exports.Fillup = Fillup;

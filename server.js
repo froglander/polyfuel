@@ -2,12 +2,10 @@
 /*                             Server dependencies                          */
 /* ************************************************************************ */
 var express = require('express');
-
-var path = require('path');
-
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var path = require('path');
 
 // for authentication
 // var passport = require('passport');
@@ -15,9 +13,9 @@ var mongoose = require('mongoose');
 // var cookieParser = require('cookie-parser');
 
 // Require Mongo schemas
-var Fillup = require('./models/Fillup');
 var Vehicle = require('./models/Vehicle');
 var User = require('./models/User');
+var Fillup = require('./models/Fillup').Fillup;
 
 // Set up Express
 var app = express();
@@ -61,11 +59,6 @@ db.once('open', function () {
 /* ************************************************************************ */
 /*                                  Routes                                  */
 /* ************************************************************************ */
-// Main route
-app.get('*', function (req, res) {
-    // res.sendFile('./public/index.html');
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
 
 // Sign up route
 app.post('/signup', function (req, res) {
@@ -100,25 +93,11 @@ app.post('/signup', function (req, res) {
 // });
 
 // POST a fill-up to save
-app.post('/api/save', function (req, res) {
+app.post('/api/save/fillup', function (req, res) {
     console.log("Post a fill-up to save");
-
-    //var newFillUp = new Fillup(req.body);
 
     console.log(req.body);
 
-    // miles: fillMiles,
-    //     gallons: fillGals,
-    //     price: fillPrice,
-    //     partial: fillPartial,
-    //     vehicle_id: fillVehId
-
-
-    // var miles = req.body.miles;
-    // var gallons = req.body.date;
-    // var price = req.body.url;
-    // var partial =;
-    // var vehicle_id = ;
     var newFillUp = new Fillup(req.body);
 
     newFillUp.save(function(err, doc) {
@@ -128,16 +107,43 @@ app.post('/api/save', function (req, res) {
             res.send(doc._id);
         }
     });
-
-    // newArticle.save(function(err, doc){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-    //         // Return mongoose id of documente saved
-    //         res.send(doc._id);
-    //     }
-    // });
 });
+
+// POST a vehicle to save
+app.post('/api/save/vehicle', function (req, res) {
+    console.log("Post a vehicle to save");
+
+    console.log(req.body);
+
+    var newVehicle = new Vehicle(req.body);
+
+    newVehicle.save(function(err, doc) {
+        if(err) {
+            console.log("Error: ", err);
+        } else {
+            res.send(doc._id);
+        }
+    });
+});
+
+// Retrieve all fillups
+app.get('/api/saved', function(req, res) {
+    Fillup.find({})
+        .exec(function(err, doc) {
+            if(err) {
+                console.log("Error:", err);
+            } else {
+                res.send(doc);
+            }
+        })
+});
+
+// Main route
+app.get('*', function (req, res) {
+    // res.sendFile('./public/index.html');
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
+
 
 // Set app to listen
 app.listen(PORT, function () {

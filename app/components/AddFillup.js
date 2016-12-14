@@ -37,7 +37,7 @@ var AddFillup = React.createClass({
         };
         console.log("click fill-up:", newFillUp);
 
-        return axios.post('/api/save', newFillUp)
+        return axios.post('/api/save/fillup', newFillUp)
             .then(function(results) {
                 console.log("mongoose id:", results.data);
                 return results.data;

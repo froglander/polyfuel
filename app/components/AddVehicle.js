@@ -26,14 +26,27 @@ var AddVehicle = React.createClass({
         this.setState(changedState);
     },
     handleSubmit: function () {
-        console.log("Submit clicked");
-        // this.props.newFillUp(this.state.miles, this.state.gallons, this.state.price, this.state.partial, this.state.vehicle_id);
-        //
-        // console.log("add fillup: miles:", this.state.miles);
-        // console.log("gallons:", this.state.gallons);
-        // console.log("price:", this.state.price);
+        console.log("Submit button clicked");
+        console.log("year:", this.state.year);
+        console.log("make:", this.state.make);
+        console.log("model:", this.state.model);
+        console.log("trim:", this.state.trim);
 
-        return false;
+        var newVehicle = {
+            year: this.state.year,
+            make: this.state.make,
+            model: this.state.model,
+            trim: this.state.trim,
+        };
+        console.log("click add vehicle:", newVehicle);
+
+        return axios.post('/api/save/vehicle', newVehicle)
+            .then(function (results) {
+                console.log("mongoose id:", results.data);
+                return results.data;
+            }.bind(this));
+
+        // return false;
     },
     // Here we render the component
     render: function () {
