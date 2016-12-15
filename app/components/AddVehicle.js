@@ -73,7 +73,7 @@ var AddVehicle = React.createClass({
                                                   title="Model" labelId="model" inputType="text"/>
 
                                     <LabeledField handleChange={this.handleChange} val={this.state.trim}
-                                                  title="trim" labelId="trim" inputType="text"/>
+                                                  title="Trim" labelId="trim" inputType="text"/>
 
                                     <button type="submit" className="btn btn-primary btn-lg btn-block"
                                             onClick={this.handleSubmit}>Save Vehicle

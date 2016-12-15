@@ -13,7 +13,7 @@ var DisplayMPG = React.createClass({
     componentDidMount: function () {
         console.log("Does this show?");
 
-        return axios.get('/api/saved')
+        return axios.get('/api/get/fillups')
             .then(function (results) {
                 console.log("axios results", results);
                 return results;

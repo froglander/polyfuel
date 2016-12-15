@@ -127,8 +127,20 @@ app.post('/api/save/vehicle', function (req, res) {
 });
 
 // Retrieve all fillups
-app.get('/api/saved', function(req, res) {
+app.get('/api/get/fillups', function(req, res) {
     Fillup.find({})
+        .exec(function(err, doc) {
+            if(err) {
+                console.log("Error:", err);
+            } else {
+                res.send(doc);
+            }
+        })
+});
+
+// Retrieve all vehicles
+app.get('/api/get/vehicle', function(req, res) {
+    Vehicle.find({})
         .exec(function(err, doc) {
             if(err) {
                 console.log("Error:", err);
