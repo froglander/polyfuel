@@ -12,6 +12,6 @@ var LabeledField = function (props) {
             </div>
         </div>
     )
-}
+};
 
 module.exports = LabeledField;

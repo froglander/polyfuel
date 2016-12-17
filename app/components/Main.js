@@ -73,23 +73,23 @@ var Main = React.createClass({
     /* ********************************* */
 
     // Set the state for the search terms
-    setFillup: function (fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
-        console.log("set fill up");
-        this.setState({
-            miles: fillMiles,
-            gallons: fillGals,
-            price: fillPrice,
-            partial: fillPartial,
-            vehicle_id: fillVehId
-        }, function () {
-            console.log("main miles:", this.state.miles);
-            console.log("main gallons:", this.state.gallons);
-            console.log("main price:", this.state.price);
-        });
-
-
-        return false;
-    },
+    // setFillup: function (fillMiles, fillGals, fillPrice, fillPartial, fillVehId) {
+    //     console.log("set fill up");
+    //     this.setState({
+    //         miles: fillMiles,
+    //         gallons: fillGals,
+    //         price: fillPrice,
+    //         partial: fillPartial,
+    //         vehicle_id: fillVehId
+    //     }, function () {
+    //         console.log("main miles:", this.state.miles);
+    //         console.log("main gallons:", this.state.gallons);
+    //         console.log("main price:", this.state.price);
+    //     });
+    //
+    //
+    //     return false;
+    // },
     // Here we render the component
     render: function () {
         return (
@@ -104,7 +104,6 @@ var Main = React.createClass({
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
                             </button>
-                            {/*<a className="navbar-brand" href="#">Polyfuel</a>*/}
                             <Link to="/">Polyfuel</Link>
                         </div>
                         <div className="collapse navbar-collapse" id="poly-nav-collapse">

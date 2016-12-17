@@ -39,7 +39,8 @@ var VehicleSchema = new Schema({
     },
     // Each vehicle belongs to a single user
     user_id : {
-        type: Schema.Types.ObjectId, ref: 'User'
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

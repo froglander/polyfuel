@@ -34,7 +34,8 @@ var FillupSchema = new Schema({
     },
     // Each fill up belongs to a specific vehicle
     vehicle_id : {
-        type: Schema.Types.ObjectId, ref: 'Vehicle'
+        type: Schema.Types.ObjectId,
+        ref: 'Vehicle'
     }
 });
 
