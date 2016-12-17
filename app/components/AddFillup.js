@@ -4,81 +4,8 @@ var axios = require('axios');
 
 // For form fields
 var LabeledField = require('./LabeledField');
+var VehicleSelector = require('./VehicleSelector');
 
-var VehicleSelector = React.createClass({
-    getInitialState: function () {
-        return {
-            selectValue: "",
-            savedVehicles: [],
-        };
-    },
-    handleChange: function (e) {
-        this.setState({selectValue: e.target.value});
-    },
-    componentDidMount: function () {
-        return axios.get('/api/get/vehicle')
-            .then(function (results) {
-                // console.log("axios vehicle results", results);
-                return results;
-            })
-            .then(function (vehicleData) {
-                this.setState({
-                    savedVehicles: vehicleData.data
-                });
-                // console.log("retrieve vehicle info");
-            }.bind(this))
-    },
-    render: function () {
-        // console.log("Render dropdown select box", this.state.savedVehicles);
-        // console.log("true/false", this.state.savedVehicles == "");
-        // console.log("is it an array", Array.isArray(this.state.savedVehicles));
-
-        var message = 'You selected ' + this.state.selectValue;
-
-        if (this.state.savedVehicles == "") {
-            // var message = 'You selected ' + this.state.selectValue;
-            return (
-                <div>
-                    <select
-                        value={this.state.selectValue}
-                        onChange={this.handleChange}
-                    >
-                        <option value="New">No Vehicles Saved</option>
-                    </select>
-                    <p>{message}</p>
-                </div>
-            )
-        } else {
-            console.log(this.state.savedVehicles);
-            var vehicles = this.state.savedVehicles.map(function (vehicle, index) {
-
-                return (
-                    <option key={index} value={vehicle._id}>
-                        {vehicle.make} {vehicle.model}
-                    </option>
-                )
-            }.bind(this));
-        }
-
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <select
-                            value={this.state.selectValue}
-                            onChange={this.handleChange}
-                        >
-                            {vehicles}
-                        </select>
-                        <p>{message}</p>
-                    </div>
-                </div>
-            </div>
-        );
-
-
-    }
-});
 
 /* ***************************************************************** */
 var AddFillup = React.createClass({
@@ -93,7 +20,6 @@ var AddFillup = React.createClass({
             vehicle_id: "",
             // selectedVehicle: "",
         }
-
     },
     handleChange: function (e) {
         console.log("input field changed");
@@ -125,6 +51,10 @@ var AddFillup = React.createClass({
 
         // return false;
     },
+    onVehicleChange: function(vehicle_id) {
+        console.log("vehicle_id: ", vehicle_id);
+        this.setState({vehicle_id: vehicle_id});
+    },
     // Here we render the component
     render: function () {
         console.log("Render add fill up component");
@@ -152,10 +82,12 @@ var AddFillup = React.createClass({
                                     <LabeledField handleChange={this.handleChange} val={this.state.partial}
                                                   title="Partial Fill-Up" labelId="partial" inputType="checkbox"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.vehicle_id}
-                                    title="Vehicle" labelId="vehicle_id" inputType="text"/>
-
-                                    <VehicleSelector />
+                                    <div className="form-group">
+                                        <label className="col-sm-3 control-label">Select Vehicle</label>
+                                        <div className="col-sm-9">
+                                            <VehicleSelector vehicleChange={this.onVehicleChange} />
+                                        </div>
+                                    </div>
 
                                     <button type="submit" className="btn btn-primary btn-lg btn-block"
                                             onClick={this.handleSubmit}>Add Fill-Up

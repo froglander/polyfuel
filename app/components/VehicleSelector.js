@@ -4,7 +4,6 @@ var axios = require('axios');
 
 var VehicleSelector = React.createClass({
     getInitialState: function () {
-        return {selectValue:'Radish'};
         return {
             selectValue: "",
             savedVehicles: [],
@@ -12,6 +11,8 @@ var VehicleSelector = React.createClass({
     },
     handleChange: function (e) {
         this.setState({selectValue: e.target.value});
+        console.log("handleChange this:", this);
+        this.props.vehicleChange(e.target.value);
     },
     componentDidMount: function () {
         return axios.get('/api/get/vehicle')

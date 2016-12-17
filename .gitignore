@@ -42,3 +42,4 @@ yarn.lock
 .idea
 
 public/bundle.js
+public/bundle.js.map
