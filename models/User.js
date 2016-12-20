@@ -16,7 +16,7 @@ var UserSchema = new Schema({
         required: true
     },
     // Password
-    model: {
+    password: {
         type: String,
         required: true
     },

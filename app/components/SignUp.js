@@ -22,9 +22,43 @@ var SignUp = React.createClass({
     handleSubmit: function () {
         console.log("Submit clicked");
 
-        this.props.SignUp(this.state.username, this.state.password);
-
+        // this.props.SignUp(this.state.username, this.state.password);
         console.log("new sign in username:", this.state.username);
+
+        // SignUp: function (thisItem, event) {
+            // axios({
+            //     method: 'POST',
+            //     data: {
+            //         username: this.state.username,
+            //         password: this.state.password
+            //     }
+            // }).then(function(user) {
+            //     // If all good, save to database
+            //     var newUser = {username: this.stat}
+            // }, function (error) {
+            //     // If a problem, let me know!
+            // });
+
+
+
+            // handleClick: function(thisItem, event) {
+            // console.log("Click to save article");
+            // console.log(thisItem);
+
+            var newUser = {username: this.state.username, password: this.state.password };
+            console.log("click signup:", newUser);
+            return axios.post('/api/signup', newUser)
+                .then(function(results) {
+                    console.log("mongoose id:", results.data);
+                    return results.data;
+                }.bind(this));
+
+            // },
+
+
+
+
+        // },
 
         return false;
     },

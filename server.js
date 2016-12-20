@@ -61,7 +61,7 @@ db.once('open', function () {
 /* ************************************************************************ */
 
 // Sign up route
-app.post('/signup', function (req, res) {
+app.post('/api/signup', function (req, res) {
     //check req.body for username and pass, use them to login with mongoose/msql
     //     if (err) return res.json(err);
     // return res.json(user);
@@ -69,7 +69,7 @@ app.post('/signup', function (req, res) {
 
     var newUser = new User(req.body);
 
-    console.log(req.body)
+    console.log("req.body: ", req.body);
 
     var username = req.body.username;
     var password = req.body.password;

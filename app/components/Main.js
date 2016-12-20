@@ -12,6 +12,7 @@ var Link = ReactRouter.Link;
 // Include all sub-components
 var AddFillup = require('./AddFillup');
 var SignIn = require('./SignIn');
+var SignUp = require('./SignUp');
 
 
 var Main = React.createClass({
@@ -25,7 +26,7 @@ var Main = React.createClass({
             vehicle_id: ""
         }
     },
-    signup: function (thisItem, event) {
+    SignUp: function (thisItem, event) {
         // axios({
         //     method: 'POST',
         //     data: {
