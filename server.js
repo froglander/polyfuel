@@ -7,10 +7,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
 
-// for authentication
-// var passport = require('passport');
-// var session = require('express-session');
-// var cookieParser = require('cookie-parser');
+var stormpath = require('express-stormpath');
 
 // Require Mongo schemas
 var Vehicle = require('./models/Vehicle');
@@ -19,7 +16,7 @@ var Fillup = require('./models/Fillup').Fillup;
 
 // Set up Express
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3001;
 
 // Set up Morgan for logging
 app.use(logger('dev'));
@@ -27,14 +24,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
-
-// app.use(cookieParser());
-
-// required for passport
-// app.use(session({ secret: 'puppyponypuppypony' })); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
 
 // Set up path to static directory for css/imgs/etc
 app.use(express.static('./public'));
@@ -56,33 +45,42 @@ db.once('open', function () {
     console.log("Mongoose connection successful");
 });
 
+
+// Stormpath react tutorial
+app.use(stormpath.init(app, {
+    web: {
+        produces: ['application/json']
+    }
+    // website: true
+}));
+
 /* ************************************************************************ */
 /*                                  Routes                                  */
 /* ************************************************************************ */
 
 // Sign up route
-app.post('/api/signup', function (req, res) {
-    //check req.body for username and pass, use them to login with mongoose/msql
-    //     if (err) return res.json(err);
-    // return res.json(user);
-    console.log("Sign up route");
-
-    var newUser = new User(req.body);
-
-    console.log("req.body: ", req.body);
-
-    var username = req.body.username;
-    var password = req.body.password;
-
-    newUser.save(function (err, doc) {
-        if (err) {
-            console.log(err);
-        } else {
-            // Return mongoose id of documente saved
-            res.send(doc._id);
-        }
-    });
-});
+// app.post('/api/signup', function (req, res) {
+//     //check req.body for username and pass, use them to login with mongoose/msql
+//     //     if (err) return res.json(err);
+//     // return res.json(user);
+//     console.log("Sign up route");
+//
+//     var newUser = new User(req.body);
+//
+//     console.log("req.body: ", req.body);
+//
+//     var username = req.body.username;
+//     var password = req.body.password;
+//
+//     newUser.save(function (err, doc) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             // Return mongoose id of documente saved
+//             res.send(doc._id);
+//         }
+//     });
+// });
 
 
 // Sign in route
@@ -91,6 +89,47 @@ app.post('/api/signup', function (req, res) {
 //     //     if (err) return res.json(err);
 //     // return res.json(user);
 // });
+
+//Stormpath user accounts
+app.post('/me', bodyParser.json(), stormpath.loginRequired, function(req, res) {
+    function writeError(message) {
+        res.status(400);
+        res.json({message: message, status: 400});
+        res.end();
+    }
+
+    function saveAccount() {
+        req.user.givenName = req.body.givenName;
+        req.user.surname = req.body.surname;
+        req.user.email = req.body.email;
+
+        req.user.save(function(err) {
+            if(err) {
+                return writeError(err.userMessage || err.message);
+            }
+            res.end();
+        });
+    }
+
+    if(req.body.password) {
+        var application = req.app.get('stormpathApplication');
+
+        application.authenticateAccount({
+            username: req.user.username,
+            password: req.body.existingPassword
+        }, function (err) {
+            if(err) {
+                return writeError('The existing password that you entered was incorrect.');
+            }
+
+            req.user.password = req.body.password;
+
+            saveAccount();
+        });
+    } else {
+        saveAccount();
+    }
+});
 
 // POST a fill-up to save
 app.post('/api/save/fillup', function (req, res) {
@@ -157,7 +196,14 @@ app.get('*', function (req, res) {
 });
 
 
-// Set app to listen
-app.listen(PORT, function () {
-    console.log("App is listening on PORT: ", PORT);
+// Stormpath tutorial wrap .listen in app.on
+app.on('stormpath.ready', function() {
+    // Set app to listen
+    app.listen(PORT, function (err) {
+        if(err) {
+            return console.error(err);
+        }
+        console.log("App is listening on PORT: ", PORT);
+    });
 });
+

@@ -2,6 +2,9 @@
 var React = require('react');
 var axios = require('axios');
 
+var ReactStormpath = require('react-stormpath');
+var RegistrationForm = ReactStormpath.RegistrationForm;
+
 var LabeledField = require('./LabeledField');
 
 
@@ -74,24 +77,7 @@ var SignUp = React.createClass({
                             <div className="panel-heading">
                                 <h3 className="panel-title">Sign Up</h3>
                             </div>
-                            <div className="panel-body">
-                                <form className="form-horizontal">
-
-                                    <LabeledField handleChange={this.handleChange} val={this.state.username}
-                                                  title="Username" labelId="username" inputType="text"/>
-
-                                    <LabeledField handleChange={this.handleChange} val={this.state.password}
-                                                  title="Password" labelId="password" inputType="text"/>
-
-                                    <LabeledField handleChange={this.handleChange}
-                                                  title="Re-enter Password" labelId="password2" inputType="text"/>
-
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block"
-                                            onClick={this.handleSubmit}>
-                                        Save
-                                    </button>
-                                </form>
-                            </div>
+                            <RegistrationForm />
                         </div>
                     </div>
                 </div>
@@ -102,3 +88,22 @@ var SignUp = React.createClass({
 
 // Export the component back for use in other files
 module.exports = SignUp;
+
+{/*<div className="panel-body">*/}
+    {/*<form className="form-horizontal">*/}
+
+        {/*<LabeledField handleChange={this.handleChange} val={this.state.username}*/}
+                      {/*title="Username" labelId="username" inputType="text"/>*/}
+
+        {/*<LabeledField handleChange={this.handleChange} val={this.state.password}*/}
+                      {/*title="Password" labelId="password" inputType="text"/>*/}
+
+        {/*<LabeledField handleChange={this.handleChange}*/}
+                      {/*title="Re-enter Password" labelId="password2" inputType="text"/>*/}
+
+        {/*<button type="submit" className="btn btn-primary btn-lg btn-block"*/}
+                {/*onClick={this.handleSubmit}>*/}
+            {/*Save*/}
+        {/*</button>*/}
+    {/*</form>*/}
+{/*</div>*/}

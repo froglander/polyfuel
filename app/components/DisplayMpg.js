@@ -2,6 +2,8 @@
 var React = require('react');
 var axios = require('axios');
 
+var DocumentTitle = require('react-document-title');
+
 var DisplayMPG = React.createClass({
 
     getInitialState: function () {
@@ -54,22 +56,24 @@ var DisplayMPG = React.createClass({
         }
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">Fill-Up Data</h3>
-                            </div>
-                            <div className="panel-body">
+            <DocumentTitle title={`Vehicle MPG`}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                    <h3 className="panel-title">Fill-Up Data</h3>
+                                </div>
+                                <div className="panel-body">
 
-                                {fillups}
+                                    {fillups}
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </DocumentTitle>
         )
     }
 });
