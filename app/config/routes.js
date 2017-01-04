@@ -36,9 +36,7 @@ module.exports = (
             {/* Once the user signs in display fill up info*/}
             <HomeRoute path='DisplayMpg' component={DisplayMpg} />
                 <Route path='AddFillup' component={AddFillup}/>
-                {/*<Route path='DisplayMpg' component={DisplayMpg}/>*/}
                 <Route path='AddVehicle' component={AddVehicle}/>
-            {/*</Route>*/}
         </AuthenticatedRoute>
     </HomeRoute>
 );

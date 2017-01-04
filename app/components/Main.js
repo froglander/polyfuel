@@ -16,11 +16,14 @@ var LogoutLink = ReactStormpath.LogoutLink;
 var Authenticated = ReactStormpath.Authenticated;
 var NotAuthenticated = ReactStormpath.NotAuthenticated;
 
+var DocumentTitle = require('react-document-title');
 
 // Include all sub-components
 var AddFillup = require('./AddFillup');
 var SignIn = require('./SignIn');
 var SignUp = require('./SignUp');
+
+var Header = require('./Header');
 
 
 var Main = React.createClass({
@@ -49,22 +52,19 @@ var Main = React.createClass({
         // });
 
 
-
         // handleClick: function(thisItem, event) {
-            // console.log("Click to save article");
-            // console.log(thisItem);
+        // console.log("Click to save article");
+        // console.log(thisItem);
 
-            var newUser = {username: thisItem.username, date: thisItem.password };
-            // console.log("click article:", newArticle);
-            return axios.post('/api/signup', newUser)
-                .then(function(results) {
-                    console.log("mongoose id:", results.data);
-                    return results.data;
-                }.bind(this));
+        var newUser = {username: thisItem.username, date: thisItem.password};
+        // console.log("click article:", newArticle);
+        return axios.post('/api/signup', newUser)
+            .then(function (results) {
+                console.log("mongoose id:", results.data);
+                return results.data;
+            }.bind(this));
 
         // },
-
-
 
 
     },
@@ -79,6 +79,24 @@ var Main = React.createClass({
         });
     },
 
+    contextTypes: {
+        authenticated: React.PropTypes.bool,
+        user: React.PropTypes.object
+    },
+//
+//     if (!this.context.authenticated) {
+//     return (
+//         <div>
+//             You need to <LoginLink />.
+//         </div>
+//     );
+// }
+//
+// return (
+//     <div>
+//         Welcome {this.context.user.username}!
+//     </div>
+// );
     /* ********************************* */
 
     // Set the state for the search terms
@@ -99,65 +117,35 @@ var Main = React.createClass({
     //
     //     return false;
     // },
+
+
+
+
+
     // Here we render the component
     render: function () {
-        return (
-            <div className="container-fluid">
-                <nav className="navbar navbar-default navbar-static-top">
+        // if (!this.context.authenticated) {
+        //     return (
+        //         <div>
+        //             You need to <LoginLink/>.
+        //         </div>
+        //     );
+        // }
+
+            console.log("main test: ", this.context.authenticated);
+            return (
+                <DocumentTitle title='polyfuel'>
+
                     <div className="container-fluid">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
-                                    data-target="#poly-nav-collapse" aria-expanded="false">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span> 
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
-                            <Link to="/">Polyfuel</Link>
-                        </div>
-                        <div className="collapse navbar-collapse" id="poly-nav-collapse">
-                            <ul className="nav navbar-nav navbar-right">
-                                <NotAuthenticated>
-                                    <li>
-                                        <LoginLink/>
-                                    </li>
-                                </NotAuthenticated>
+                        <Header/>
 
-                                <NotAuthenticated>
-                                    <li>
-                                        <Link to="/SignUp">Sign Up</Link>
-                                    </li>
-                                </NotAuthenticated>
-
-                                {/*<li><Link to="/SignUp" data-toggle="collapse" data-target=".navbar-collapse.in">Sign*/}
-                                    {/*Up</Link></li>*/}
-
-                                <Authenticated>
-                                    <li>
-                                        <LogoutLink/>
-                                    </li>
-
-                                    <li><Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">View
-                                        Details</Link></li>
-                                    <li><Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">Add
-                                        Fill-Up</Link></li>
-                                    <li><Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">View
-                                        Vehicles</Link></li>
-
-                                </Authenticated>
-
-
-                            </ul>
+                        <div className="row">
+                            {this.props.children}
                         </div>
                     </div>
-                </nav>
-
-                <div className="row">
-                    {this.props.children}
-                </div>
-            </div>
-        )
-    }
+                </DocumentTitle>
+            )
+        }
 });
 
 // Export the component back for use in other files
