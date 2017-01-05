@@ -28,11 +28,11 @@ var AddFillup = React.createClass({
         this.setState(changedState);
     },
     handleSubmit: function () {
-        console.log("Submit button clicked");
-        console.log("add fillup: miles:", this.state.miles);
-        console.log("gallons:", this.state.gallons);
-        console.log("price:", this.state.price);
-        console.log("vehicle:", this.state.vehicle_id);
+        // console.log("Submit button clicked");
+        // console.log("add fillup: miles:", this.state.miles);
+        // console.log("gallons:", this.state.gallons);
+        // console.log("price:", this.state.price);
+        // console.log("vehicle:", this.state.vehicle_id);
 
         var newFillUp = {
             miles: this.state.miles,
@@ -40,7 +40,7 @@ var AddFillup = React.createClass({
             price: this.state.price,
             vehicle_id: this.state.vehicle_id,
         };
-        console.log("click fill-up:", newFillUp);
+        // console.log("click fill-up:", newFillUp);
 
         return axios.post('/api/save/fillup', newFillUp)
             .then(function (results) {
@@ -51,13 +51,14 @@ var AddFillup = React.createClass({
 
         // return false;
     },
-    onVehicleChange: function(vehicle_id) {
+    onVehicleChange: function (vehicle_id) {
         console.log("vehicle_id: ", vehicle_id);
         this.setState({vehicle_id: vehicle_id});
     },
+
     // Here we render the component
     render: function () {
-        console.log("Render add fill up component");
+        // console.log("Render add fill up component");
 
         return (
             <div className="container">
@@ -85,7 +86,7 @@ var AddFillup = React.createClass({
                                     <div className="form-group">
                                         <label className="col-sm-3 control-label">Select Vehicle</label>
                                         <div className="col-sm-9">
-                                            <VehicleSelector vehicleChange={this.onVehicleChange} />
+                                            <VehicleSelector vehicleChange={this.onVehicleChange}/>
                                         </div>
                                     </div>
 

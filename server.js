@@ -179,11 +179,18 @@ app.get('/api/get/fillups', function(req, res) {
 
 // Retrieve all vehicles
 app.get('/api/get/vehicle', function(req, res) {
-    Vehicle.find({})
+    // console.log("req params: ", req._parsedUrl.query);
+    // var queryTerm = req._parsedUrl.query.split("=");
+    var queryString = req._parsedUrl.query;
+    var queryTerm = queryString.substr(queryString.indexOf("=")+1);
+    // console.log("queryTerm:", queryTerm);
+
+    Vehicle.find({ user_id: queryTerm})
         .exec(function(err, doc) {
             if(err) {
                 console.log("Error:", err);
             } else {
+                console.log("doc:", doc);
                 res.send(doc);
             }
         })

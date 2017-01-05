@@ -16,6 +16,7 @@ var AddVehicle = React.createClass({
             trim: "",
             cityMPG: "",
             hwyMPG: "",
+            user_id: "",
         }
 
     },
@@ -26,31 +27,37 @@ var AddVehicle = React.createClass({
         this.setState(changedState);
     },
     handleSubmit: function () {
-        console.log("Submit button clicked");
-        console.log("year:", this.state.year);
-        console.log("make:", this.state.make);
-        console.log("model:", this.state.model);
-        console.log("trim:", this.state.trim);
+        // console.log("Submit button clicked");
+        // console.log("year:", this.state.year);
+        // console.log("make:", this.state.make);
+        // console.log("model:", this.state.model);
+        // console.log("trim:", this.state.trim);
+        // console.log("user_id:", this.context.user.username);
 
         var newVehicle = {
             year: this.state.year,
             make: this.state.make,
             model: this.state.model,
             trim: this.state.trim,
+            user_id: this.context.user.username,
         };
-        console.log("click add vehicle:", newVehicle);
+        // console.log("click add vehicle:", newVehicle);
 
         return axios.post('/api/save/vehicle', newVehicle)
             .then(function (results) {
-                console.log("mongoose id:", results.data);
+                // console.log("mongoose id:", results.data);
                 return results.data;
             }.bind(this));
 
         // return false;
     },
+    contextTypes: {
+        authenticated: React.PropTypes.bool,
+        user: React.PropTypes.object
+    },
     // Here we render the component
     render: function () {
-        console.log("Render add vehicle component");
+        // console.log("Render add vehicle component");
 
         return (
             <div className="container">

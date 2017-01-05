@@ -15,7 +15,7 @@ var VehicleSelector = React.createClass({
         this.props.vehicleChange(e.target.value);
     },
     componentDidMount: function () {
-        return axios.get('/api/get/vehicle')
+        return axios.get('/api/get/vehicle', {params: {user_id: this.context.user.username}})
             .then(function (results) {
                 // console.log("axios vehicle results", results);
                 return results;
@@ -26,6 +26,10 @@ var VehicleSelector = React.createClass({
                 });
                 // console.log("retrieve vehicle info");
             }.bind(this))
+    },
+    contextTypes: {
+        authenticated: React.PropTypes.bool,
+        user: React.PropTypes.object
     },
     render: function () {
         // console.log("Render dropdown select box", this.state.savedVehicles);

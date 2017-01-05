@@ -56,34 +56,23 @@ var Header = React.createClass({
                                     <Link to="/SignUp">Sign Up</Link>
                                 </li>
                             </NotAuthenticated>
-
-                            {/*<li><Link to="/SignUp" data-toggle="collapse" data-target=".navbar-collapse.in">Sign*/}
-                            {/*Up</Link></li>*/}
-
                             <Authenticated>
-                                <li>
-
-
-                                    {this.context.user.username}
-                                    {/*Username*/}
-                                </li>
                                 <li>
                                     <LogoutLink/>
                                 </li>
-
-                                <li><Link to="/DisplayMpg" data-toggle="collapse"
-                                          data-target=".navbar-collapse.in">View
-                                    Details</Link></li>
-                                <li><Link to="/AddFillup" data-toggle="collapse"
-                                          data-target=".navbar-collapse.in">Add
-                                    Fill-Up</Link></li>
-                                <li><Link to="/AddVehicle" data-toggle="collapse"
-                                          data-target=".navbar-collapse.in">View
-                                    Vehicles</Link></li>
-
+                                <li>
+                                    <Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        View Details</Link>
+                                </li>
+                                <li>
+                                    <Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        Add Fill-Up</Link>
+                                </li>
+                                <li>
+                                    <Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        Add Vehicles</Link>
+                                </li>
                             </Authenticated>
-
-
                         </ul>
                     </div>
                 </div>

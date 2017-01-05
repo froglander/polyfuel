@@ -39,8 +39,11 @@ var VehicleSchema = new Schema({
     },
     // Each vehicle belongs to a single user
     user_id : {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        // type: Schema.Types.ObjectId,
+        // ref: 'User'
+        // For now, this will be a text field that contains the username
+        type: String,
+        required: true
     }
 });
 

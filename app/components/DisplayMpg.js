@@ -27,7 +27,10 @@ var DisplayMPG = React.createClass({
                 console.log("saved stuff");
             }.bind(this))
     },
-
+    contextTypes: {
+        authenticated: React.PropTypes.bool,
+        user: React.PropTypes.object
+    },
     // Here we render the component
     render: function () {
         console.log("does this show", this.state.savedFillUps);
@@ -63,6 +66,7 @@ var DisplayMPG = React.createClass({
                             <div className="panel panel-default">
                                 <div className="panel-heading">
                                     <h3 className="panel-title">Fill-Up Data</h3>
+                                    <h4>User: {this.context.user.username}</h4>
                                 </div>
                                 <div className="panel-body">
 
