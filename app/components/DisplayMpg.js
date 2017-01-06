@@ -15,6 +15,7 @@ var DisplayMPG = React.createClass({
     componentDidMount: function () {
         console.log("Does this show?");
 
+        // Need to specify vehicle here
         return axios.get('/api/get/fillups')
             .then(function (results) {
                 console.log("axios results", results);

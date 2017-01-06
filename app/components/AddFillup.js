@@ -41,13 +41,29 @@ var AddFillup = React.createClass({
             vehicle_id: this.state.vehicle_id,
         };
         // console.log("click fill-up:", newFillUp);
+        var newCurrentVehicle = {
+            username: this.context.user.username,
+            vehicle_id: this.state.vehicle_id,
+        };
 
-        return axios.post('/api/save/fillup', newFillUp)
-            .then(function (results) {
-                console.log("mongoose id:", results.data);
-                return results.data;
-            }.bind(this));
+        function postFillup(newFillUp) {
+            return axios.post('/api/save/fillup', newFillUp);
+        }
 
+        function updateLatestVehicle(newCurrentVehicle) {
+            return axios.post('api/update/currentVehicle', newCurrentVehicle)
+        }
+
+        // return axios.post('/api/save/fillup', newFillUp)
+        //     .then(function (results) {
+        //         console.log("mongoose id:", results.data);
+        //         return results.data;
+        //     }.bind(this));
+
+        axios.all([postFillup(newFillUp), updateLatestVehicle(newCurrentVehicle)])
+            .then(axios.spread(function(acct, perms) {
+                // According to documentation, both requests should now be complete
+            }));
 
         // return false;
     },
@@ -55,7 +71,10 @@ var AddFillup = React.createClass({
         console.log("vehicle_id: ", vehicle_id);
         this.setState({vehicle_id: vehicle_id});
     },
-
+    contextTypes: {
+        authenticated: React.PropTypes.bool,
+        user: React.PropTypes.object
+    },
     // Here we render the component
     render: function () {
         // console.log("Render add fill up component");

@@ -27,12 +27,11 @@ var AddVehicle = React.createClass({
         this.setState(changedState);
     },
     handleSubmit: function () {
-        // console.log("Submit button clicked");
-        // console.log("year:", this.state.year);
-        // console.log("make:", this.state.make);
-        // console.log("model:", this.state.model);
-        // console.log("trim:", this.state.trim);
-        // console.log("user_id:", this.context.user.username);
+
+        axios.get('/api/get/user', {params: {user_id: this.context.user.username}})
+            .then(function(results) {
+                return results.data;
+            }.bind(this));
 
         var newVehicle = {
             year: this.state.year,

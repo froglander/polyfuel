@@ -16,7 +16,7 @@ var Fillup = require('./models/Fillup').Fillup;
 
 // Set up Express
 var app = express();
-var PORT = process.env.PORT || 3001;
+var PORT = process.env.PORT || 3000;
 
 // Set up Morgan for logging
 app.use(logger('dev'));
@@ -58,29 +58,29 @@ app.use(stormpath.init(app, {
 /*                                  Routes                                  */
 /* ************************************************************************ */
 
-// Sign up route
-// app.post('/api/signup', function (req, res) {
-//     //check req.body for username and pass, use them to login with mongoose/msql
-//     //     if (err) return res.json(err);
-//     // return res.json(user);
-//     console.log("Sign up route");
-//
-//     var newUser = new User(req.body);
-//
-//     console.log("req.body: ", req.body);
-//
-//     var username = req.body.username;
-//     var password = req.body.password;
-//
-//     newUser.save(function (err, doc) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             // Return mongoose id of documente saved
-//             res.send(doc._id);
-//         }
-//     });
-// });
+// Add new user to collection
+app.post('/api/signup', function (req, res) {
+    //check req.body for username and pass, use them to login with mongoose/msql
+    //     if (err) return res.json(err);
+    // return res.json(user);
+    console.log("Sign up route");
+
+    var newUser = new User(req.body);
+
+    console.log("req.body: ", req.body);
+
+    var username = req.body.username;
+    // var password = req.body.password;
+
+    newUser.save(function (err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            // Return mongoose id of documente saved
+            res.send(doc._id);
+        }
+    });
+});
 
 
 // Sign in route
@@ -91,7 +91,7 @@ app.use(stormpath.init(app, {
 // });
 
 //Stormpath user accounts
-app.post('/me', bodyParser.json(), stormpath.loginRequired, function(req, res) {
+app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
     function writeError(message) {
         res.status(400);
         res.json({message: message, status: 400});
@@ -103,22 +103,22 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function(req, res) {
         req.user.surname = req.body.surname;
         req.user.email = req.body.email;
 
-        req.user.save(function(err) {
-            if(err) {
+        req.user.save(function (err) {
+            if (err) {
                 return writeError(err.userMessage || err.message);
             }
             res.end();
         });
     }
 
-    if(req.body.password) {
+    if (req.body.password) {
         var application = req.app.get('stormpathApplication');
 
         application.authenticateAccount({
             username: req.user.username,
             password: req.body.existingPassword
         }, function (err) {
-            if(err) {
+            if (err) {
                 return writeError('The existing password that you entered was incorrect.');
             }
 
@@ -139,14 +139,32 @@ app.post('/api/save/fillup', function (req, res) {
 
     var newFillUp = new Fillup(req.body);
 
-    newFillUp.save(function(err, doc) {
-        if(err) {
+    newFillUp.save(function (err, doc) {
+        if (err) {
             console.log("Error: ", err);
         } else {
             res.send(doc._id);
         }
     });
 });
+
+// POST updated lastVehicleAccessed
+app.post('/api/update/currentVehicle', function (req, res) {
+    console.log("Post updated vehicle accessed");
+
+    console.log("req.body:", req.body);
+
+    User.update({
+            username: req.body.username
+        },
+        {$set: {lastVehicleAccessed: req.body.vehicle_id}},
+        function (err, doc) {
+            if (err) console.log(err);
+        });
+
+
+});
+
 
 // POST a vehicle to save
 app.post('/api/save/vehicle', function (req, res) {
@@ -156,8 +174,8 @@ app.post('/api/save/vehicle', function (req, res) {
 
     var newVehicle = new Vehicle(req.body);
 
-    newVehicle.save(function(err, doc) {
-        if(err) {
+    newVehicle.save(function (err, doc) {
+        if (err) {
             console.log("Error: ", err);
         } else {
             res.send(doc._id);
@@ -165,32 +183,71 @@ app.post('/api/save/vehicle', function (req, res) {
     });
 });
 
-// Retrieve all fillups
-app.get('/api/get/fillups', function(req, res) {
-    Fillup.find({})
+// Retrieve all fillups for selected vehicle
+app.get('/api/get/fillups', function (req, res) {
+
+    var queryString = req._parsedUrl.query;
+    if (queryString) {
+        var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
+    }
+
+
+    Fillup.find({vehicle_id: queryTerm})
+        .exec(function (err, doc) {
+            if (err) {
+                console.log("Error:", err);
+            } else {
+                // console.log("get fillups:", doc);
+                res.send(doc);
+            }
+        })
+});
+
+// Retrieve all vehicles for logged in user
+app.get('/api/get/vehicle', function (req, res) {
+    // console.log("req params: ", req._parsedUrl.query);
+    // var queryTerm = req._parsedUrl.query.split("=");
+    var queryString = req._parsedUrl.query;
+    var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
+    // console.log("queryTerm:", queryTerm);
+
+    Vehicle.find({user_id: queryTerm})
+        .exec(function (err, doc) {
+            if (err) {
+                console.log("Error:", err);
+            } else {
+                // console.log("doc:", doc);
+                res.send(doc);
+            }
+        })
+});
+
+// GET user info
+app.get('/api/get/user', function(req, res) {
+    var queryString = req._parsedUrl.query;
+    var queryTerm = queryString.substr(queryString.indexOf("=") + 1 );
+
+    User.find({username: queryTerm})
         .exec(function(err, doc) {
             if(err) {
-                console.log("Error:", err);
+                console.log("Error: ", err);
             } else {
                 res.send(doc);
             }
         })
 });
 
-// Retrieve all vehicles
-app.get('/api/get/vehicle', function(req, res) {
-    // console.log("req params: ", req._parsedUrl.query);
-    // var queryTerm = req._parsedUrl.query.split("=");
+// GET the last vehicle accessed by user
+app.get('/api/get/lastVehicleAccessed', function(req, res) {
     var queryString = req._parsedUrl.query;
-    var queryTerm = queryString.substr(queryString.indexOf("=")+1);
-    // console.log("queryTerm:", queryTerm);
+    var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
 
-    Vehicle.find({ user_id: queryTerm})
+    User.find({username: queryTerm})
         .exec(function(err, doc) {
             if(err) {
-                console.log("Error:", err);
+                console.log("Error: ", err);
             } else {
-                console.log("doc:", doc);
+                console.log("lastVehicleAccessed doc: ", doc);
                 res.send(doc);
             }
         })
@@ -204,10 +261,10 @@ app.get('*', function (req, res) {
 
 
 // Stormpath tutorial wrap .listen in app.on
-app.on('stormpath.ready', function() {
+app.on('stormpath.ready', function () {
     // Set app to listen
     app.listen(PORT, function (err) {
-        if(err) {
+        if (err) {
             return console.error(err);
         }
         console.log("App is listening on PORT: ", PORT);

@@ -10,20 +10,18 @@ var Schema = mongoose.Schema;
 
 // User schema
 var UserSchema = new Schema({
-    // Username
+    // Only storing the email as username, password, etc is stored in Stormpath
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
-    // Password
-    password: {
-        type: String,
-        required: true
-    },
-    // Zip code to know approximate area of country
-    zip: {
-        type: String,
-        required: false
+    // So the app knows which vehicle's data to default to
+    // This value is updated each time a user accesses a different vehicle
+    lastVehicleAccessed: {
+        // type: Schema.Types.ObjectId,
+        // ref: 'Vehicle'
+        type: String
     }
 });
 

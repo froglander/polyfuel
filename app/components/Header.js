@@ -22,8 +22,7 @@ var AddFillup = require('./AddFillup');
 var SignIn = require('./SignIn');
 var SignUp = require('./SignUp');
 
-var Header = React.createClass({
-    contextTypes: {
+var Header = React.createClass({ contextTypes: {
         authenticated: React.PropTypes.bool,
         user: React.PropTypes.object
     },
@@ -31,7 +30,7 @@ var Header = React.createClass({
         console.log("header test: ", this.context.authenticated);
         return (
 
-            <nav className="navbar navbar-default navbar-static-top">
+            <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
@@ -40,10 +39,32 @@ var Header = React.createClass({
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
-                        </button>
-                        <Link to="/">Polyfuel</Link>
+                            <Link className="navbar-brand" to="/">Polyfuel</Link></button>
                     </div>
+
                     <div className="collapse navbar-collapse" id="poly-nav-collapse">
+
+                        <ul className="nav navbar-nav">
+                            <Authenticated>
+                                <li>
+                                    <Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        View Details</Link>
+                                </li>
+                            </Authenticated>
+                            <Authenticated>
+                                <li>
+                                    <Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        Add Fill-Up</Link>
+                                </li>
+                            </Authenticated>
+                            <Authenticated>
+                                <li>
+                                    <Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                        Add Vehicles</Link>
+                                </li>
+                            </Authenticated>
+                        </ul>
+
                         <ul className="nav navbar-nav navbar-right">
                             <NotAuthenticated>
                                 <li>
@@ -60,18 +81,6 @@ var Header = React.createClass({
                                 <li>
                                     <LogoutLink/>
                                 </li>
-                                <li>
-                                    <Link to="/DisplayMpg" data-toggle="collapse" data-target=".navbar-collapse.in">
-                                        View Details</Link>
-                                </li>
-                                <li>
-                                    <Link to="/AddFillup" data-toggle="collapse" data-target=".navbar-collapse.in">
-                                        Add Fill-Up</Link>
-                                </li>
-                                <li>
-                                    <Link to="/AddVehicle" data-toggle="collapse" data-target=".navbar-collapse.in">
-                                        Add Vehicles</Link>
-                                </li>
                             </Authenticated>
                         </ul>
                     </div>
@@ -84,3 +93,4 @@ var Header = React.createClass({
 
 // Export the component back for use in other files
 module.exports = Header;
+
