@@ -1,19 +1,13 @@
 // Include React
 // Switching to ES6 (trying to) because so many examples are written that way
-// var React = require('react');
-// var axios = require('axios');
 
 import React from 'react';
 import axios from 'axios';
 
-// For form fields
-// var LabeledField = require('./LabeledField');
-// var VehicleSelector = require('./VehicleSelector');
 import LabeledField from './LabeledField';
 import VehicleSelector from './VehicleSelector';
 
 /* ***************************************************************** */
-// var AddFillup = React.createClass({
 export default class AddFillup extends React.Component {
     constructor(props) {
         super(props);
@@ -119,6 +113,3 @@ AddFillup.contextTypes = {
     authenticated: React.PropTypes.bool,
     user: React.PropTypes.object
 };
-
-// Export the component back for use in other files
-// module.exports = AddFillup;

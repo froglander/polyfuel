@@ -1,5 +1,4 @@
 // Switching to ES6 (trying to) because so many examples are written that way
-// var React = require('react');
 import React from 'react';
 
 var LabeledField = function (props) {

@@ -1,7 +1,6 @@
 // Include React
 // Switching to ES6 (trying to) because so many examples are written that way
 import React from 'react';
-import axios from 'axios';
 
 import {Router, Route, IndexRoute, Link} from 'react-router';
 

@@ -35,6 +35,3 @@ export default class SignIn extends React.Component {
         )
     }
 }
-
-// Export the component back for use in other files
-// module.exports = SignIn;
