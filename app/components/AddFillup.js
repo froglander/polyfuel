@@ -68,11 +68,6 @@ export default class AddFillup extends React.Component {
         this.setState({vehicle_id: vehicle_id});
     }
 
-    // static contextTypes = {
-    //     authenticated: React.PropTypes.bool,
-    //     user: React.PropTypes.object
-    // };
-
     // Here we render the component
     render() {
         console.log("Render add fill up component");

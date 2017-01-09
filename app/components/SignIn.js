@@ -1,15 +1,14 @@
 // Switching to ES6 (trying to) because so many examples are written that way
-// var React = require('react');
-// var axios = require('axios');
 import React from 'react';
-
-// var DocumentTitle = require('react-document-title');
-// var LoginForm = require('react-stormpath').LoginForm;
 import DocumentTitle from 'react-document-title';
-import LoginForm from 'react-stormpath';
+import { LoginForm } from 'react-stormpath';
 
-// var SignIn = React.createClass({
 export default class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
+    }
+
     onFormSubmit(e, next) {
 
         var data = e.data;
@@ -20,6 +19,7 @@ export default class SignIn extends React.Component {
     }
 
     render () {
+        console.log("Render sign in componennt");
         return (
             <DocumentTitle title={`Login`}>
                 <div className="container">
@@ -30,7 +30,6 @@ export default class SignIn extends React.Component {
                         </div>
                     </div>
                     <LoginForm onSubmit={this.onFormSubmit}/>
-
                 </div>
             </DocumentTitle>
         )

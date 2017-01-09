@@ -5,20 +5,18 @@
 import React from 'react';
 import axios from 'axios';
 
-// var DocumentTitle = require('react-document-title');
-// var RegistrationForm = require('react-stormpath').RegistrationForm;
 import DocumentTitle from 'react-document-title';
-import RegistrationForm from 'react-stormpath';
+import { RegistrationForm } from 'react-stormpath';
 
-// var SignUp = React.createClass({
 export default class SignUp extends React.Component {
-    // Set initial state
-    // getInitialState: function () {
-    //     return {
-    //         user_id: "",
-    //     }
-    //
-    // },
+    constructor(props) {
+        super(props);
+        this.state = {
+            user_id: ""
+        };
+        this.onFormSubmit = this.onFormSubmit.bind(this);
+    }
+
     onFormSubmit (e, next) {
         var data = e.data;
 
@@ -34,16 +32,13 @@ export default class SignUp extends React.Component {
             .then(function (results) {
                 console.log("gimme mongoose id:", results.data);
                 return results.data;
-            // })
-            // .then(function(userData) {
-            //     console.log("userData:", userData);
-            //     this.setState({user_id: userData});
             }.bind(this));
         next(null, data);
     }
     // Here we render the component
     render () {
-        console.log("user:", this.user_id);
+        // console.log("user:", this.user_id);
+        console.log("Sign up");
         return (
             <DocumentTitle title={`New User`}>
                 <div className="container">
@@ -59,6 +54,3 @@ export default class SignUp extends React.Component {
         )
     }
 }
-
-// Export the component back for use in other files
-// module.exports = SignUp;

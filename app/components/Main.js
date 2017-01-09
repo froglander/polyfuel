@@ -11,14 +11,12 @@ import {LoginLink, LogoutLink, Authenticated, NotAuthenticated} from 'react-stor
 import DocumentTitle from 'react-document-title';
 
 // Include all sub-components
-import AddFillup from './AddFillup';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
 import Header from './Header';
 
 
 export default class Main extends React.Component {
     render() {
+        console.log("Render Main.js");
         return (
             <DocumentTitle title='polyfuel'>
                 <div className="container-fluid">
@@ -29,6 +27,6 @@ export default class Main extends React.Component {
 
                 </div>
             </DocumentTitle>
-        )
+        );
     }
 }
