@@ -1,6 +1,7 @@
 /* ************************************************************************ */
 /*                             Server dependencies                          */
 /* ************************************************************************ */
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
@@ -64,10 +65,9 @@ app.post('/api/signup', function (req, res) {
     //     if (err) return res.json(err);
     // return res.json(user);
     console.log("Sign up route");
-
+    console.log("req.body: ", req.body);
     var newUser = new User(req.body);
 
-    console.log("req.body: ", req.body);
 
     var username = req.body.username;
     // var password = req.body.password;
@@ -131,28 +131,33 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
     }
 });
 
-// POST a fill-up to save
+/** ***********************************************************************
+ *                          POST a fill-up to save
+ * ************************************************************************ */
 app.post('/api/save/fillup', function (req, res) {
     console.log("Post a fill-up to save");
 
-    console.log(req.body);
-
-    var newFillUp = new Fillup(req.body);
-
-    newFillUp.save(function (err, doc) {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            res.send(doc._id);
+    User.findOneAndUpdate(
+        {username: req.body.params.user_id, 'vehicles._id': req.body.params.fillup.vehicle_id},
+        {$push: {'vehicles.$.fillups': req.body.params.fillup}},
+        {upsert: true, new: true},
+        function (err, doc) {
+            if (err) {
+                console.log("Looks like it didn't work: ", err);
+            } else {
+                res.send(doc);
+            }
         }
-    });
+    );
 });
 
-// POST updated lastVehicleAccessed
+/** ***********************************************************************
+ *                          POST lastVehicleAccessed
+ * ************************************************************************ */
 app.post('/api/update/currentVehicle', function (req, res) {
     console.log("Post updated vehicle accessed");
 
-    console.log("req.body:", req.body);
+    console.log("currentVehicle req.body:", req.body);
 
     User.update({
             username: req.body.username
@@ -166,70 +171,78 @@ app.post('/api/update/currentVehicle', function (req, res) {
 });
 
 
-// POST a vehicle to save
+/** ***********************************************************************
+ *                          POST a vehicle to save
+ * ************************************************************************ */
 app.post('/api/save/vehicle', function (req, res) {
     console.log("Post a vehicle to save");
 
-    console.log(req.body);
-
-    var newVehicle = new Vehicle(req.body);
-
-    newVehicle.save(function (err, doc) {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            res.send(doc._id);
+    User.findOneAndUpdate(
+        {username: req.body.params.user_id},
+        {$push: {vehicles: req.body.params.vehicle}},
+        {upsert: true, new: true},
+        function (err, doc) {
+            if (err) {
+                console.log("Something went wrong!: ", err)
+            } else {
+                res.send(doc);
+            }
         }
-    });
+    )
 });
 
-// Retrieve all fillups for selected vehicle
+/** ***********************************************************************
+ *              GET fillups for selected vehicle
+ *  *********************************************************************** */
 app.get('/api/get/fillups', function (req, res) {
+    console.log(req._parsedUrl);
+
 
     var queryString = req._parsedUrl.query;
     if (queryString) {
         var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
     }
 
-
-    Fillup.find({vehicle_id: queryTerm})
-        .exec(function (err, doc) {
-            if (err) {
-                console.log("Error:", err);
-            } else {
-                // console.log("get fillups:", doc);
-                res.send(doc);
-            }
-        })
-});
-
-// Retrieve all vehicles for logged in user
-app.get('/api/get/vehicle', function (req, res) {
-    // console.log("req params: ", req._parsedUrl.query);
-    // var queryTerm = req._parsedUrl.query.split("=");
-    var queryString = req._parsedUrl.query;
-    var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
-    // console.log("queryTerm:", queryTerm);
-
-    Vehicle.find({user_id: queryTerm})
-        .exec(function (err, doc) {
-            if (err) {
-                console.log("Error:", err);
-            } else {
-                // console.log("doc:", doc);
-                res.send(doc);
-            }
-        })
-});
-
-// GET user info
-app.get('/api/get/user', function(req, res) {
-    var queryString = req._parsedUrl.query;
-    var queryTerm = queryString.substr(queryString.indexOf("=") + 1 );
+    console.log("queryString: ", queryString);
 
     User.find({username: queryTerm})
-        .exec(function(err, doc) {
-            if(err) {
+        .exec(function (err, doc) {
+            if (err) {
+                console.log("Error:", err);
+            } else {
+                console.log("get fillups:", doc);
+                res.send(doc);
+            }
+        })
+});
+
+/** ***********************************************************************
+ *              GET all vehicles for logged in user
+ *  *********************************************************************** */
+app.get('/api/get/vehicle', function (req, res) {
+    var queryString = req._parsedUrl.query;
+    var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
+
+    User.find({username: queryTerm})
+        .exec(function (err, doc) {
+            if (err) {
+                console.log("Error:", err);
+            } else {
+                res.send(doc);
+            }
+        })
+});
+
+/** ***********************************************************************
+ *              GET user info
+ *  *********************************************************************** */
+app.get('/api/get/user', function (req, res) {
+    var queryString = req._parsedUrl.query;
+    var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
+
+    User.find({username: queryTerm})
+        .exec(function (err, doc) {
+            if (err) {
                 console.log("Error: ", err);
             } else {
                 res.send(doc);
@@ -237,14 +250,16 @@ app.get('/api/get/user', function(req, res) {
         })
 });
 
-// GET the last vehicle accessed by user
-app.get('/api/get/lastVehicleAccessed', function(req, res) {
+/** ***********************************************************************
+ *              GET last vehicle accessed by user
+ *  *********************************************************************** */
+app.get('/api/get/lastVehicleAccessed', function (req, res) {
     var queryString = req._parsedUrl.query;
     var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
 
     User.find({username: queryTerm})
-        .exec(function(err, doc) {
-            if(err) {
+        .exec(function (err, doc) {
+            if (err) {
                 console.log("Error: ", err);
             } else {
                 console.log("lastVehicleAccessed doc: ", doc);

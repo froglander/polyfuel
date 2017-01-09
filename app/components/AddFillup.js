@@ -1,83 +1,81 @@
 // Include React
-var React = require('react');
-var axios = require('axios');
+// Switching to ES6 (trying to) because so many examples are written that way
+// var React = require('react');
+// var axios = require('axios');
+
+import React from 'react';
+import axios from 'axios';
 
 // For form fields
-var LabeledField = require('./LabeledField');
-var VehicleSelector = require('./VehicleSelector');
-
+// var LabeledField = require('./LabeledField');
+// var VehicleSelector = require('./VehicleSelector');
+import LabeledField from './LabeledField';
+import VehicleSelector from './VehicleSelector';
 
 /* ***************************************************************** */
-var AddFillup = React.createClass({
+// var AddFillup = React.createClass({
+export default class AddFillup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            miles: props.miles,
+            gallons: props.gallons,
+            price: props.price,
+            partial: props.partial,
+            vehicle_id: props.vehicle_id
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onVehicleChange = this.onVehicleChange.bind(this);
+    }
 
-    // Set initial state
-    getInitialState: function () {
-        return {
-            miles: "",
-            gallons: "",
-            price: "",
-            partial: false,
-            vehicle_id: "",
-            // selectedVehicle: "",
-        }
-    },
-    handleChange: function (e) {
+    handleChange(e) {
         console.log("input field changed");
-        var changedState = {};
+        let changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
-    },
-    handleSubmit: function () {
-        // console.log("Submit button clicked");
-        // console.log("add fillup: miles:", this.state.miles);
-        // console.log("gallons:", this.state.gallons);
-        // console.log("price:", this.state.price);
-        // console.log("vehicle:", this.state.vehicle_id);
+    }
 
-        var newFillUp = {
+    handleSubmit() {
+        let user_id = this.context.user.username;
+        let newFillUp = {
             miles: this.state.miles,
             gallons: this.state.gallons,
             price: this.state.price,
             vehicle_id: this.state.vehicle_id,
         };
-        // console.log("click fill-up:", newFillUp);
-        var newCurrentVehicle = {
+        let newCurrentVehicle = {
             username: this.context.user.username,
             vehicle_id: this.state.vehicle_id,
         };
 
         function postFillup(newFillUp) {
-            return axios.post('/api/save/fillup', newFillUp);
+            return axios.post('/api/save/fillup', {params: {user_id: user_id, fillup: newFillUp}});
         }
 
         function updateLatestVehicle(newCurrentVehicle) {
             return axios.post('api/update/currentVehicle', newCurrentVehicle)
         }
 
-        // return axios.post('/api/save/fillup', newFillUp)
-        //     .then(function (results) {
-        //         console.log("mongoose id:", results.data);
-        //         return results.data;
-        //     }.bind(this));
-
         axios.all([postFillup(newFillUp), updateLatestVehicle(newCurrentVehicle)])
-            .then(axios.spread(function(acct, perms) {
+            .then(axios.spread(function (acct, perms) {
                 // According to documentation, both requests should now be complete
             }));
+    }
 
-        // return false;
-    },
-    onVehicleChange: function (vehicle_id) {
-        console.log("vehicle_id: ", vehicle_id);
+    onVehicleChange(vehicle_id) {
+        console.log("Add fill-up vehicle_id: ", vehicle_id);
         this.setState({vehicle_id: vehicle_id});
-    },
-    contextTypes: {
-        authenticated: React.PropTypes.bool,
-        user: React.PropTypes.object
-    },
+    }
+
+    // static contextTypes = {
+    //     authenticated: React.PropTypes.bool,
+    //     user: React.PropTypes.object
+    // };
+
     // Here we render the component
-    render: function () {
-        // console.log("Render add fill up component");
+    render() {
+        console.log("Render add fill up component");
 
         return (
             <div className="container">
@@ -120,7 +118,12 @@ var AddFillup = React.createClass({
             </div>
         )
     }
-});
+}
+
+AddFillup.contextTypes = {
+    authenticated: React.PropTypes.bool,
+    user: React.PropTypes.object
+};
 
 // Export the component back for use in other files
-module.exports = AddFillup;
+// module.exports = AddFillup;

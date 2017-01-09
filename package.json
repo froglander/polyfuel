@@ -19,6 +19,8 @@
   "homepage": "https://github.com/froglander/polyfuel#readme",
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-stage-0": "^6.16.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-stormpath": "^3.1.8",

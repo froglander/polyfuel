@@ -1,35 +1,16 @@
 // Include React
-var React = require('react');
-var axios = require('axios');
+// Switching to ES6 (trying to) because so many examples are written that way
+import React from 'react';
 
-// Included all of the React Router dependencies
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var IndexRoute = ReactRouter.IndexRoute;
-var Link = ReactRouter.Link;
+// Include all of the React Router dependencies
+import {Link} from 'react-router';
 
 // For stormpath
-var ReactStormpath = require('react-stormpath');
-var LoginLink = ReactStormpath.LoginLink;
-var LogoutLink = ReactStormpath.LogoutLink;
-var Authenticated = ReactStormpath.Authenticated;
-var NotAuthenticated = ReactStormpath.NotAuthenticated;
+import {LoginLink, LogoutLink, Authenticated, NotAuthenticated} from 'react-stormpath';
 
-
-// Include all sub-components
-var AddFillup = require('./AddFillup');
-var SignIn = require('./SignIn');
-var SignUp = require('./SignUp');
-
-var Header = React.createClass({ contextTypes: {
-        authenticated: React.PropTypes.bool,
-        user: React.PropTypes.object
-    },
-    render: function () {
-        console.log("header test: ", this.context.authenticated);
+export default class Header extends React.Component {
+    render() {
         return (
-
             <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
@@ -88,9 +69,5 @@ var Header = React.createClass({ contextTypes: {
             </nav>
         )
     }
-
-});
-
-// Export the component back for use in other files
-module.exports = Header;
+}
 

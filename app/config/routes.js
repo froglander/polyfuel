@@ -1,27 +1,40 @@
 // Inclue the React library
-var React = require('react');
+// Switching to ES6 (trying to) because so many examples are written that way
+// var React = require('react');
+import React from 'react';
 
 // Include the Router
-var Router = require('react-router');
-var Route = Router.Route;
+// var Router = require('react-router');
+// var Route = Router.Route;
+import { Router, Route, IndexRoute } from 'react-router';
 
 //  Include the IndexRoute (catch-all route)
-var IndexRoute = Router.IndexRoute;
+// var IndexRoute = Router.IndexRoute;
 
 // Stormpath
-var ReactStormpath = require('react-stormpath');
-var HomeRoute = ReactStormpath.HomeRoute;
-var LoginRoute = ReactStormpath.LoginRoute;
-var AuthenticatedRoute = ReactStormpath.AuthenticatedRoute;
+// var ReactStormpath = require('react-stormpath');
+// var HomeRoute = ReactStormpath.HomeRoute;
+// var LoginRoute = ReactStormpath.LoginRoute;
+// var AuthenticatedRoute = ReactStormpath.AuthenticatedRoute;
+import { HomeRoute, LoginRoute, AuthenticatedRoute } from 'react-stormpath';
+
 
 // Reference the high-level components
-var Main = require('../components/Main');
-var IndexPage = require('../components/IndexPage');
-var AddFillup = require('../components/AddFillup');
-var SignIn = require('../components/SignIn');
-var DisplayMpg = require('../components/DisplayMpg');
-var AddVehicle = require('../components/AddVehicle');
-var SignUp = require('../components/SignUp');
+// var Main = require('../components/Main');
+// var IndexPage = require('../components/IndexPage');
+// var AddFillup = require('../components/AddFillup');
+// var SignIn = require('../components/SignIn');
+// var DisplayMpg = require('../components/DisplayMpg');
+// var AddVehicle = require('../components/AddVehicle');
+// var SignUp = require('../components/SignUp');
+import Main from '../components/Main';
+import IndexPage from '../components/IndexPage';
+import AddFillup from '../components/AddFillup';
+import SignIn from '../components/SignIn';
+import SignUp from '../components/SignUp';
+import DisplayMpg from '../components/DisplayMpg';
+import AddVehicle from '../components/AddVehicle';
+
 
 // Export the Routes
 module.exports = (

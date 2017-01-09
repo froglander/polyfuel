@@ -1,14 +1,15 @@
-var React = require('react');
-var Link = require('react-router').Link;
-var LoginLink = require('react-stormpath').LoginLink;
+// Switching to ES6 (trying to) because so many examples are written that way
+// var React = require('react');
+// var Link = require('react-router').Link;
+// var LoginLink = require('react-stormpath').LoginLink;
+import React from 'react';
+// import { Link } from 'react-router';
+import { LoginLink } from 'react-stormpath';
 
-var IndexPage = React.createClass({
-    contextTypes: {
-        authenticated: React.PropTypes.bool,
-        user: React.PropTypes.object
-    },
+// var IndexPage = React.createClass({
+export class IndexPage extends React.Component {
     // Here we render the component which can differ depending if user is logged in
-    render: function () {
+    render () {
         if (!this.context.authenticated) {
             return (
                 <div className="container">
@@ -40,6 +41,12 @@ var IndexPage = React.createClass({
             </div>
         );
     }
-});
+}
+
+IndexPage.contextTypes = {
+    authenticated: React.PropTypes.bool,
+    user: React.PropTypes.object
+};
+
 // Export the component back for use in other files
-module.exports = IndexPage;
+// module.exports = IndexPage;

@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
 
     // This code will be compiled
@@ -18,10 +20,10 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     // These are the specific transformations we'll be using.
-                    presets: ['react', 'es2015']
+                    presets: ['stage-0', 'react', 'es2015']
                 }
             }
         ]
     }
 
-}
+};

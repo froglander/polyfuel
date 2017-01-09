@@ -1,61 +1,81 @@
 // Include React
-var React = require('react');
-var axios = require('axios');
+// Switching to ES6 (trying to) because so many examples are written that way
+// var React = require('react');
+// var axios = require('axios');
 
-var LabeledField = require('./LabeledField');
+import React from 'react';
+import axios from 'axios';
 
+// var LabeledField = require('./LabeledField');
+import LabeledField from './LabeledField';
 
-var AddVehicle = React.createClass({
-
+// var AddVehicle = React.createClass({
+export default class AddVehicle extends React.Component {
     // Set initial state
-    getInitialState: function () {
-        return {
+    // getInitialState () {
+    //     return {
+    //         make: "",
+    //         model: "",
+    //         year: "",
+    //         trim: "",
+    //         cityMPG: "",
+    //         hwyMPG: "",
+    //         user_id: "",
+    //     }
+    // }
+
+    constructor(props) {
+        super(props);
+        this.state = {
             make: "",
             model: "",
             year: "",
             trim: "",
-            cityMPG: "",
-            hwyMPG: "",
             user_id: "",
-        }
+        };
+    }
 
-    },
-    handleChange: function (e) {
+    handleChange (e) {
         console.log("input field changed");
         var changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
-    },
-    handleSubmit: function () {
+    }
+    handleSubmit () {
+        // When you click submit to add a new vehicle, it will update the currently logged in
+        // User by adding vehicle data to the array
 
-        axios.get('/api/get/user', {params: {user_id: this.context.user.username}})
-            .then(function(results) {
-                return results.data;
-            }.bind(this));
 
+        // First get the ID value for the current username
+        // axios.get('/api/get/user', {params: {user_id: this.context.user.username}})
+        //     .then(function(results) {
+        //         return results.data;
+        //     }.bind(this));
         var newVehicle = {
             year: this.state.year,
             make: this.state.make,
             model: this.state.model,
             trim: this.state.trim,
-            user_id: this.context.user.username,
+
         };
         // console.log("click add vehicle:", newVehicle);
 
-        return axios.post('/api/save/vehicle', newVehicle)
+        return axios.post('/api/save/vehicle', {params: {user_id: this.context.user.username, vehicle: newVehicle }})
             .then(function (results) {
-                // console.log("mongoose id:", results.data);
+                console.log("mongoose id:", results.data);
                 return results.data;
             }.bind(this));
 
         // return false;
-    },
-    contextTypes: {
-        authenticated: React.PropTypes.bool,
-        user: React.PropTypes.object
-    },
+    }
+
+    // static contextTypes = {
+    //     authenticated: React.PropTypes.bool,
+    //     user: React.PropTypes.object
+    // };
+
     // Here we render the component
-    render: function () {
+    render () {
         // console.log("Render add vehicle component");
 
         return (
@@ -92,7 +112,12 @@ var AddVehicle = React.createClass({
             </div>
         )
     }
-});
+}
+
+// AddVehicle.contextTypes = {
+//     authenticated: React.PropTypes.bool,
+//     user: React.PropTypes.object
+// };
 
 // Export the component back for use in other files
-module.exports = AddVehicle;
+// module.exports = AddVehicle;
