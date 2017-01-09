@@ -8,9 +8,6 @@ import {IndexRoute, Route, browserHistory} from 'react-router';
 // For Stormpath
 import ReactStormpath, {Router, HomeRoute, LoginRoute, AuthenticatedRoute} from 'react-stormpath';
 
-import MasterPage from './components/MasterPage';
-
-
 import Main from './components/Main';
 import IndexPage from './components/IndexPage';
 import SignIn from './components/SignIn';
@@ -39,5 +36,4 @@ ReactDOM.render(
         </HomeRoute>
     </Router>,
     document.getElementById('app')
-)
-;
+);
