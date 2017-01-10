@@ -64,17 +64,38 @@ class VehicleSelector extends React.Component {
     }
 
     render() {
-        return (
-            <select
-                value={this.props.selectedVehicle}
-                ref={(input) => this.vehicleSelectInput = input }
-                onChange={this.handleChange}
-            >
-                <option value="58706eaf7f9fcd74e20c11eb">Cmax</option>
-                <option value="58706ec07f9fcd74e20c11ec">Aura</option>
-                <option value="5873a885661e6804145b4a2d">Versa</option>
-            </select>
-        );
+        console.log("vehicles: ", this.props.vehicles);
+
+        if (this.props.vehicles.length === 0) {
+            return (
+                <div>
+                    <select
+                        value="New"
+                        onChange={this.handleChange}
+                    >
+                        <option value="New">No Vehicles Saved</option>
+                    </select>
+                </div>
+            )
+        } else {
+            let vehicles = this.props.vehicles.map(function (vehicle, index) {
+                return (
+                    <option key={index} value={vehicle._id}>
+                        {vehicle.make} {vehicle.model}
+                    </option>
+                )
+            }.bind(this));
+
+            return (
+                <select
+                    value={this.props.selectedVehicle}
+                    ref={(input) => this.vehicleSelectInput = input }
+                    onChange={this.handleChange}
+                >
+                    {vehicles}
+                </select>
+            )
+        }
     }
 }
 /** ****************************************************************** */
@@ -101,12 +122,13 @@ class VehicleFillUpTable extends React.Component {
     }
 
     render() {
-        if(!this.props.curVehicle) {
+        if (!this.props.curVehicle) {
             return (<div>State not yet assigned!</div>)
         }
         return (
             <div>
                 <VehicleSelector
+                    vehicles={this.props.vehicles}
                     selectedVehicle={this.state.selectedVehicle}
                     onUserChange={this.handleUserChange}
                 />
@@ -142,7 +164,7 @@ export default class DisplayMPG extends React.Component {
 
 
     render() {
-        if(!this.state.lastVehicleAccessed) {
+        if (!this.state.lastVehicleAccessed) {
             return (<div>Database call not finished!</div>)
         }
         return (

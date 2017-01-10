@@ -12,7 +12,6 @@ export default class SignIn extends React.Component {
     onFormSubmit(e, next) {
 
         var data = e.data;
-        console.log("data: ", data);
         // Force usernames to be in lowercase
         data.email = data.username.toLowerCase();
         next(null, data);
