@@ -4,7 +4,7 @@ import { LoginLink } from 'react-stormpath';
 
 export default class IndexPage extends React.Component {
     render() {
-        console.log("Render IndexPage, is user authenticated?", this.context.authenticated);
+        // console.log("Render IndexPage, is user authenticated?", this.context.authenticated);
         if (!this.context.authenticated) {
             return (
                 <div className="container">

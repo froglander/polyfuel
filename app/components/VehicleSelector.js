@@ -9,12 +9,14 @@ export default class VehicleSelector extends React.Component {
             selectedVehicle: "",
             savedVehicles: [],
         };
+        this.handleChange = this.handleChange.bind(this);
+
     }
     handleChange (e) {
         // Update the selectedVehicle value when the user selects a different
         // vehicle from the dropdown
         this.setState({selectedVehicle: e.target.value});
-        this.state.vehicleChange(e.target.value);
+        this.props.vehicleChange(e.target.value);
     }
     componentDidMount () {
         // Get the current User object from the mongodb and store it in "results" so that
@@ -22,7 +24,7 @@ export default class VehicleSelector extends React.Component {
         // that user
         return axios.get('/api/get/vehicle', {params: {user_id: this.context.user.username}})
             .then(function (results) {
-                console.log("VehicleSelector vehicle results: ", results.data);
+                // console.log("VehicleSelector vehicle results: ", results.data);
 
                 // condition ? true : false
                 let curVehicle = results.data[0].lastVehicleAccessed ? results.data[0].lastVehicleAccessed : results.data[0].vehicles[0]._id;
@@ -36,9 +38,9 @@ export default class VehicleSelector extends React.Component {
     }
 
     render () {
-        console.log('You selected1 ' + this.state.selectedVehicle);
+        // console.log('You selected ' + this.state.selectedVehicle);
 
-        console.log("Render VehicleSelector component");
+        // console.log("Render VehicleSelector component");
 
         if (this.state.savedVehicles.length === 0) {
             return (

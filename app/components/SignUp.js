@@ -38,7 +38,7 @@ export default class SignUp extends React.Component {
     // Here we render the component
     render () {
         // console.log("user:", this.user_id);
-        console.log("Sign up");
+        // console.log("Sign up");
         return (
             <DocumentTitle title={`New User`}>
                 <div className="container">

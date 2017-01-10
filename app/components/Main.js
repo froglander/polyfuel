@@ -15,7 +15,7 @@ import Header from './Header';
 
 export default class Main extends React.Component {
     render() {
-        console.log("Render Main.js");
+        // console.log("Render Main.js");
         return (
             <DocumentTitle title='polyfuel'>
                 <div className="container-fluid">

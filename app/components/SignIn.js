@@ -19,7 +19,7 @@ export default class SignIn extends React.Component {
     }
 
     render () {
-        console.log("Render sign in componennt");
+        // console.log("Render sign in componennt");
         return (
             <DocumentTitle title={`Login`}>
                 <div className="container">

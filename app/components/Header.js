@@ -2,7 +2,6 @@
 // Switching to ES6 (trying to) because so many examples are written that way
 import React from 'react';
 
-// Include all of the React Router dependencies
 import {Link} from 'react-router';
 
 // For stormpath
@@ -20,7 +19,8 @@ export default class Header extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
-                            <Link className="navbar-brand" to="/">Polyfuel</Link></button>
+                        </button>
+                        <Link className="navbar-brand" to="/">Polyfuel</Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="poly-nav-collapse">

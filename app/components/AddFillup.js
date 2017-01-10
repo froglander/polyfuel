@@ -3,6 +3,7 @@
 
 import React from 'react';
 import axios from 'axios';
+import DocumentTitle from 'react-document-title';
 
 import LabeledField from './LabeledField';
 import VehicleSelector from './VehicleSelector';
@@ -24,7 +25,7 @@ export default class AddFillup extends React.Component {
     }
 
     handleChange(e) {
-        console.log("input field changed");
+        // console.log("input field changed");
         let changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
@@ -58,23 +59,24 @@ export default class AddFillup extends React.Component {
     }
 
     onVehicleChange(vehicle_id) {
-        console.log("Add fill-up vehicle_id: ", vehicle_id);
+        // console.log("Add fill-up vehicle_id: ", vehicle_id);
         this.setState({vehicle_id: vehicle_id});
     }
 
     // Here we render the component
     render() {
-        console.log("Render add fill up component");
+        // console.log("Render add fill up component");
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">New Fill-Up</h3>
-                            </div>
-                            <div className="panel-body">
+            <DocumentTitle title={`Add Fill-Up`}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                    <h3 className="panel-title">New Fill-Up</h3>
+                                </div>
+                                <div className="panel-body">
                                 <form className="form-horizontal">
 
                                     <LabeledField handleChange={this.handleChange} val={this.state.miles}
@@ -105,6 +107,7 @@ export default class AddFillup extends React.Component {
                     </div>
                 </div>
             </div>
+            </DocumentTitle>
         )
     }
 }

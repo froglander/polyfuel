@@ -3,6 +3,7 @@
 
 import React from 'react';
 import axios from 'axios';
+import DocumentTitle from 'react-document-title';
 import LabeledField from './LabeledField';
 
 export default class AddVehicle extends React.Component {
@@ -20,7 +21,7 @@ export default class AddVehicle extends React.Component {
     }
 
     handleChange(e) {
-        console.log("input field changed");
+        // console.log("input field changed");
         var changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
@@ -45,40 +46,42 @@ export default class AddVehicle extends React.Component {
 
     // Here we render the component
     render() {
-        console.log("Render add vehicle component");
+        // console.log("Render add vehicle component");
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">Add New Vehicle</h3>
-                            </div>
-                            <div className="panel-body">
-                                <form className="form-horizontal">
+            <DocumentTitle title={`Add New Vehicle`}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                    <h3 className="panel-title">Add New Vehicle</h3>
+                                </div>
+                                <div className="panel-body">
+                                    <form className="form-horizontal">
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.year}
-                                                  title="Year" labelId="year" inputType="text"/>
+                                        <LabeledField handleChange={this.handleChange} val={this.state.year}
+                                                      title="Year" labelId="year" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.make}
-                                                  title="Make" labelId="make" inputType="text"/>
+                                        <LabeledField handleChange={this.handleChange} val={this.state.make}
+                                                      title="Make" labelId="make" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.model}
-                                                  title="Model" labelId="model" inputType="text"/>
+                                        <LabeledField handleChange={this.handleChange} val={this.state.model}
+                                                      title="Model" labelId="model" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.trim}
-                                                  title="Trim" labelId="trim" inputType="text"/>
+                                        <LabeledField handleChange={this.handleChange} val={this.state.trim}
+                                                      title="Trim" labelId="trim" inputType="text"/>
 
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block"
-                                            onClick={this.handleSubmit}>Save Vehicle
-                                    </button>
-                                </form>
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block"
+                                                onClick={this.handleSubmit}>Save Vehicle
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </DocumentTitle>
         )
     }
 }
