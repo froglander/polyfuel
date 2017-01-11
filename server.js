@@ -294,7 +294,7 @@ app.get('*', function (req, res) {
 // Stormpath tutorial wrap .listen in app.on
 app.on('stormpath.ready', function () {
     // Set app to listen
-    app.listen(PORT, 'localhost', function (err) {
+    app.listen(PORT, function (err) {
         if (err) {
             return console.error(err);
         }
