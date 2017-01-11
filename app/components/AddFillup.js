@@ -4,9 +4,13 @@
 import React from 'react';
 import axios from 'axios';
 import DocumentTitle from 'react-document-title';
+import Datetime from 'react-datetime';
+import moment from 'moment';
+
 
 import LabeledField from './LabeledField';
 import VehicleSelector from './VehicleSelector';
+
 
 /* ***************************************************************** */
 export default class AddFillup extends React.Component {
@@ -16,12 +20,13 @@ export default class AddFillup extends React.Component {
             miles: props.miles,
             gallons: props.gallons,
             price: props.price,
-            partial: props.partial,
-            vehicle_id: props.vehicle_id
+            vehicle_id: props.vehicle_id,
+            fillupDate: moment(),
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onVehicleChange = this.onVehicleChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
     }
 
     handleChange(e) {
@@ -29,15 +34,27 @@ export default class AddFillup extends React.Component {
         let changedState = {};
         changedState[e.target.id] = e.target.value;
         this.setState(changedState);
+
+    }
+
+    handleDateChange(e) {
+        console.log("handleDateChange(e): ", e);
+        this.setState({
+            fillupDate: moment(e).format("YYYY-MM-DD")
+        })
     }
 
     handleSubmit() {
+
+        console.log("fillup state: ", this.state);
+
         let user_id = this.context.user.username;
         let newFillUp = {
             miles: this.state.miles,
             gallons: this.state.gallons,
             price: this.state.price,
             vehicle_id: this.state.vehicle_id,
+            fillupDate: this.state.fillupDate
         };
         let newCurrentVehicle = {
             username: this.context.user.username,
@@ -66,6 +83,7 @@ export default class AddFillup extends React.Component {
     // Here we render the component
     render() {
         // console.log("Render add fill up component");
+        // var date = new Date();
 
         return (
             <DocumentTitle title={`Add Fill-Up`}>
@@ -77,36 +95,51 @@ export default class AddFillup extends React.Component {
                                     <h3 className="panel-title">New Fill-Up</h3>
                                 </div>
                                 <div className="panel-body">
-                                <form className="form-horizontal">
+                                    <form className="form-horizontal">
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.miles}
-                                                  title="Miles" labelId="miles" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.gallons}
-                                                  title="Gallons" labelId="gallons" inputType="text"/>
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.price}
-                                                  title="Price" labelId="price" inputType="text"/>
+                                        <div className="form-group">
+                                            <label htmlFor="date" className="col-sm-3 control-label">Date</label>
+                                            <div className="col-sm-9">
+                                                <Datetime timeFormat={false}
+                                                          input={true}
+                                                          closeOnSelect={true}
+                                                          closeOnTab={true}
+                                                          dateFormat="YYYY-MM-DD"
+                                                          value={this.state.fillupDate}
+                                                          onChange={this.handleDateChange}
 
-                                    <LabeledField handleChange={this.handleChange} val={this.state.partial}
-                                                  title="Partial Fill-Up" labelId="partial" inputType="checkbox"/>
-
-                                    <div className="form-group">
-                                        <label className="col-sm-3 control-label">Select Vehicle</label>
-                                        <div className="col-sm-9">
-                                            <VehicleSelector vehicleChange={this.onVehicleChange}/>
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block"
-                                            onClick={this.handleSubmit}>Add Fill-Up
-                                    </button>
-                                </form>
+
+                                        <LabeledField handleChange={this.handleChange} val={this.state.miles}
+                                                      title="Miles" labelId="miles" inputType="text"/>
+
+                                        <LabeledField handleChange={this.handleChange} val={this.state.gallons}
+                                                      title="Gallons" labelId="gallons" inputType="text"/>
+
+                                        <LabeledField handleChange={this.handleChange} val={this.state.price}
+                                                      title="Price" labelId="price" inputType="text"/>
+
+                                        <div className="form-group">
+                                            <label className="col-sm-3 control-label">Select Vehicle</label>
+                                            <div className="col-sm-9">
+                                                <VehicleSelector vehicleChange={this.onVehicleChange}/>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block"
+                                                onClick={this.handleSubmit}>Add Fill-Up
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </DocumentTitle>
         )
     }

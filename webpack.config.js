@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         filename: "public/bundle.js"
     },
 
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     // This will be what we do
     module: {
         loaders: [

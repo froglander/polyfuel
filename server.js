@@ -1,23 +1,33 @@
 /* ************************************************************************ */
 /*                             Server dependencies                          */
 /* ************************************************************************ */
+var path = require('path');
+
+// var webpack = require('webpack');
+// var config = require('./webpack.config');
 
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-var path = require('path');
+
 
 var stormpath = require('express-stormpath');
 
-// Require Mongo schemas
-var Vehicle = require('./models/Vehicle');
+// Require Mongo schema
 var User = require('./models/User');
-var Fillup = require('./models/Fillup').Fillup;
 
 // Set up Express
 var app = express();
 var PORT = process.env.PORT || 3000;
+
+// var compiler = webpack(config);
+//
+// app.use(require('webpack-dev-middleware')(compiler, {
+//     noInfo: true,
+//     publicPath: config.output.publicPath
+// }));
+
 
 // Set up Morgan for logging
 app.use(logger('dev'));

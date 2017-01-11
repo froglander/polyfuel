@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import DocumentTitle from 'react-document-title';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 import moment from 'moment';
 
 // Code examples from http://recharts.org/#/en-US/examples/CustomizedLabelLineChart
@@ -10,7 +10,7 @@ class CustomizedLabel extends React.Component {
     render() {
         const {x, y, stroke, payload} = this.props;
 
-        return <text x={x} y={y} dy={-4} fill={stroke} fontSize={10} textAnchor="middle">{payload.value}</text>
+        return <text x={x} y={y} dy={-4} fill={stroke} fontSize={9} textAnchor="middle">{payload.value}</text>
     }
 }
 
@@ -21,7 +21,7 @@ class CustomizedAxisTick extends React.Component {
 
         return (
             <g transform={`translate(${x},${y})`}>
-                <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">{payload.value}</text>
+                <text x={0} y={0} dy={12} textAnchor="end" fill="#666" transform="rotate(-35)">{payload.value}</text>
             </g>
         );
     }
@@ -31,17 +31,12 @@ class CustomizedAxisTick extends React.Component {
 class SimpleLineChart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            mpgDataArray: []
-        };
     }
 
-    componentWillMount() {
-        // Needs to be an array of objects with a dataKey and mpg
+    render() {
+
         let data = [];
         let vehicles = this.props.vehicles;
-
-        console.log("vehicles1: ", vehicles);
 
         for (var i = 0; i < vehicles.length; i++) {
             if (vehicles[i]._id === this.props.selectedVehicle) {
@@ -54,23 +49,20 @@ class SimpleLineChart extends React.Component {
             }
         }
 
-        console.log("data: ", data);
-
-        this.setState({
-            mpgDataArray: data
-        })
-    }
-
-    render() {
         return (
-            <LineChart width={600} height={300} data={this.state.mpgDataArray}
-                       margin={{top: 20, right: 30, left: 20, bottom: 10}}>
-                <XAxis dataKey="fillupDate" height={60} tick={<CustomizedAxisTick/>}/>
-                <YAxis/>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip/>
-                <Line type="monotone" dataKey="mpg" stroke="#8884d8" label={<CustomizedLabel />}/>
-            </LineChart>
+            <ResponsiveContainer minHeight={200} minWidth={300}>
+                <LineChart width={600}
+                           height={300}
+                           data={data}
+                           margin={{top: 20, right: 30, left: 0, bottom: 10}}
+                >
+                    <XAxis dataKey="fillupDate" height={60} tick={<CustomizedAxisTick/>}/>
+                    <YAxis/>
+                    <CartesianGrid strokeDasharray="3 3"/>
+                    <Tooltip/>
+                    <Line type="monotone" dataKey="mpg" stroke="#8884d8" label={<CustomizedLabel />}/>
+                </LineChart>
+            </ResponsiveContainer>
 
         );
     }
@@ -138,8 +130,6 @@ class VehicleSelector extends React.Component {
     }
 
     render() {
-        // console.log("vehicles: ", this.props.vehicles);
-
         if (this.props.vehicles.length === 0) {
             return (
                 <div>
@@ -200,6 +190,8 @@ class VehicleFillUpTable extends React.Component {
         if (!this.props.curVehicle) {
             return (<div>State not yet assigned!</div>)
         }
+        console.log("this.props.vehicles: ", this.props.vehicles);
+        console.log("this.state.selectedVehicle: ", this.state.selectedVehicle);
         return (
             <div>
                 <VehicleSelector

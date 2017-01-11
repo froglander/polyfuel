@@ -30,11 +30,10 @@ var UserSchema = new Schema({
             trim: {type: String},
             // Each vehicle will have an array of fill-ups
             fillups: [{
-                fillupDate: {type: Date, default: Date.now},
+                fillupDate: {type: String},
                 miles: {type: Number},
                 gallons: {type: Number},
                 price: {type: Number},
-                partial: {type: Boolean},
             }],
         }],
 
