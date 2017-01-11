@@ -1,6 +1,6 @@
-import { Link } from 'react-router';
-import React, { PropTypes } from 'react';
-import { LoginLink } from 'react-stormpath';
+import {Link} from 'react-router';
+import React, {PropTypes} from 'react';
+import {LoginLink} from 'react-stormpath';
 
 export default class IndexPage extends React.Component {
     render() {
@@ -8,13 +8,11 @@ export default class IndexPage extends React.Component {
         if (!this.context.authenticated) {
             return (
                 <div className="container">
-                    <h2 className="text-center">Welcome!</h2>
+                    <h2 className="text-center">PolyFuel</h2>
                     <hr />
                     <div className="jumbotron">
                         <p>
-                            <strong>To Polyfuel</strong>
-                            <br/>
-                            Say a bunch of stuff about app here
+                            Welcome to PolyFuel, the one stop app for tracking fuel efficiency across all your cars.
                         </p>
 
                     </div>
@@ -23,15 +21,16 @@ export default class IndexPage extends React.Component {
         }
         return (
             <div className="container">
-                <h2 className="text-center">Welcome!</h2>
+                <h2 className="text-center">PolyFuel</h2>
                 <hr />
                 <div className="jumbotron">
                     <p>
-                        Welcome to Polyfuel, {this.context.user.username}!
+                        Thanks for using PolyFuel, {this.context.user.username}.
+                        <br />
                         <br/>
-                        Thanks for using our app!
+                        If you have questions or concerns please email us at&nbsp;
+                        <Link to="mailto:polyfuel@dukworld.net">polyfuel@dukworld.net</Link>.
                     </p>
-
                 </div>
             </div>
         );

@@ -42,8 +42,8 @@ app.use(express.static('./public'));
 /* ************************************************************************ */
 /*                                 Mongoose                                 */
 /* ************************************************************************ */
-mongoose.connect('mongodb://localhost/polyfuel1');
-// mongoose.connect('mongodb://heroku_sfwwbczq:3di5msecgg8bj3tq50lpg556k1@ds127988.mlab.com:27988/heroku_sfwwbczq');
+// mongoose.connect('mongodb://localhost/polyfuel1');
+mongoose.connect('mongodb://heroku_xk8qhdch:anshb4n4leta2jvccf75s4kupr@ds159988.mlab.com:59988/heroku_xk8qhdch');
 
 
 var db = mongoose.connection;
