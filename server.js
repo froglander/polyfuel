@@ -31,10 +31,10 @@ var PORT = process.env.PORT || 3000;
 
 // Set up Morgan for logging
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.text());
-app.use(bodyParser.json({type: 'application/vnd.api+json'}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.text());
+// app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
 // Set up path to static directory for css/imgs/etc
 app.use(express.static('./public'));
@@ -70,7 +70,7 @@ app.use(stormpath.init(app, {
 /* ************************************************************************ */
 
 // Add new user to collection
-app.post('/api/signup', function (req, res) {
+app.post('/api/adduser', bodyParser.json(), function (req, res) {
     //check req.body for username and pass, use them to login with mongoose/msql
     //     if (err) return res.json(err);
     // return res.json(user);
@@ -100,8 +100,12 @@ app.post('/api/signup', function (req, res) {
 //     // return res.json(user);
 // });
 
-//Stormpath user accounts
+/** ***********************************************************************
+ * Stormpath user accounts
+ * ************************************************************************ */
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+    console.log("req.body: ", req.body);
+
     function writeError(message) {
         res.status(400);
         res.json({message: message, status: 400});
@@ -122,6 +126,7 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
     }
 
     if (req.body.password) {
+
         var application = req.app.get('stormpathApplication');
 
         application.authenticateAccount({
@@ -144,7 +149,7 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
 /** ***********************************************************************
  *                          POST a fill-up to save
  * ************************************************************************ */
-app.post('/api/save/fillup', function (req, res) {
+app.post('/api/save/fillup', bodyParser.json(), function (req, res) {
     console.log("Post a fill-up to save");
 
     User.findOneAndUpdate(
@@ -164,7 +169,7 @@ app.post('/api/save/fillup', function (req, res) {
 /** ***********************************************************************
  *                          POST lastVehicleAccessed
  * ************************************************************************ */
-app.post('/api/update/currentVehicle', function (req, res) {
+app.post('/api/update/currentVehicle', bodyParser.json(), function (req, res) {
     console.log("Post updated vehicle accessed");
 
     console.log("currentVehicle req.body:", req.body);
@@ -184,7 +189,7 @@ app.post('/api/update/currentVehicle', function (req, res) {
 /** ***********************************************************************
  *                          POST a vehicle to save
  * ************************************************************************ */
-app.post('/api/save/vehicle', function (req, res) {
+app.post('/api/save/vehicle', bodyParser.json(), function (req, res) {
     console.log("Post a vehicle to save");
 
     User.findOneAndUpdate(
@@ -195,6 +200,7 @@ app.post('/api/save/vehicle', function (req, res) {
             if (err) {
                 console.log("Something went wrong!: ", err)
             } else {
+                console.log("new vehicle: ", doc);
                 res.send(doc);
             }
         }
@@ -204,7 +210,7 @@ app.post('/api/save/vehicle', function (req, res) {
 /** ***********************************************************************
  *              GET fillups for selected vehicle
  *  *********************************************************************** */
-app.get('/api/get/fillups', function (req, res) {
+app.get('/api/get/fillups', bodyParser.json(), function (req, res) {
     console.log(req._parsedUrl);
 
 
@@ -229,7 +235,7 @@ app.get('/api/get/fillups', function (req, res) {
 /** ***********************************************************************
  *              GET all vehicles for logged in user
  *  *********************************************************************** */
-app.get('/api/get/vehicle', function (req, res) {
+app.get('/api/get/vehicle', bodyParser.json(), function (req, res) {
     var queryString = req._parsedUrl.query;
     var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
 
@@ -246,7 +252,7 @@ app.get('/api/get/vehicle', function (req, res) {
 /** ***********************************************************************
  *              GET user info
  *  *********************************************************************** */
-app.get('/api/get/user', function (req, res) {
+app.get('/api/get/user', bodyParser.json(), function (req, res) {
     var queryString = req._parsedUrl.query;
     var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
 
@@ -263,7 +269,7 @@ app.get('/api/get/user', function (req, res) {
 /** ***********************************************************************
  *              GET last vehicle accessed by user
  *  *********************************************************************** */
-app.get('/api/get/lastVehicleAccessed', function (req, res) {
+app.get('/api/get/lastVehicleAccessed', bodyParser.json(), function (req, res) {
     var queryString = req._parsedUrl.query;
     var queryTerm = queryString.substr(queryString.indexOf("=") + 1);
 
@@ -288,7 +294,7 @@ app.get('*', function (req, res) {
 // Stormpath tutorial wrap .listen in app.on
 app.on('stormpath.ready', function () {
     // Set app to listen
-    app.listen(PORT, function (err) {
+    app.listen(PORT, 'localhost', function (err) {
         if (err) {
             return console.error(err);
         }

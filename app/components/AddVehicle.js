@@ -30,18 +30,29 @@ export default class AddVehicle extends React.Component {
     handleSubmit() {
         // When you click submit to add a new vehicle, it will update the currently logged in
         // User by adding vehicle data
-        var newVehicle = {
+        let newVehicle = {
             year: this.state.year,
             make: this.state.make,
             model: this.state.model,
             trim: this.state.trim,
         };
 
-        return axios.post('/api/save/vehicle', {params: {user_id: this.context.user.username, vehicle: newVehicle}})
+        axios.post('/api/save/vehicle', {params: {user_id: this.context.user.username, vehicle: newVehicle}})
             .then(function (results) {
-                console.log("mongoose id:", results.data);
-                return results.data;
+                let lastVehicleAdded = results.data.vehicles[results.data.vehicles.length - 1];
+                return lastVehicleAdded._id;
+            })
+            .then(function (lastAdded) {
+                let newCurrentVehicle = {
+                    username: this.context.user.username,
+                    vehicle_id: lastAdded,
+                };
+                axios.post('api/update/currentVehicle', newCurrentVehicle)
+                    .then(function (data) {
+                        console.log("Updated lastAccessedVehicle");
+                    })
             }.bind(this));
+        this.context.router.push('/AddFillup');
     }
 
     // Here we render the component
@@ -86,7 +97,9 @@ export default class AddVehicle extends React.Component {
     }
 }
 
-AddVehicle.contextTypes = {
+AddVehicle
+    .contextTypes = {
     authenticated: React.PropTypes.bool,
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    router: React.PropTypes.object.isRequired
 };

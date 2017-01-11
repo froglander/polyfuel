@@ -26,15 +26,17 @@ export default class SignUp extends React.Component {
         // Create user in User collection
         var newUser = {username: data.email};
 
+        console.log("newUser: ", newUser);
 
 
-        axios.post('/api/signup', newUser)
+        axios.post('/api/adduser', newUser)
             .then(function (results) {
                 console.log("gimme mongoose id:", results.data);
                 return results.data;
             }.bind(this));
         next(null, data);
     }
+
     // Here we render the component
     render () {
         // console.log("user:", this.user_id);

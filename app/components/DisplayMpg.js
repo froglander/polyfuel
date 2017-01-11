@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import DocumentTitle from 'react-document-title';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
-import moment from 'moment';
 
 // Code examples from http://recharts.org/#/en-US/examples/CustomizedLabelLineChart
 /** ****************************************************************** */
@@ -40,9 +39,17 @@ class SimpleLineChart extends React.Component {
 
         for (var i = 0; i < vehicles.length; i++) {
             if (vehicles[i]._id === this.props.selectedVehicle) {
-                vehicles[i].fillups.forEach(function (fillup) {
+                vehicles[i].fillups.sort(function (a, b) {
+                    var date1 = a.fillupDate,
+                        date2 = b.fillupDate;
+                    if (date1 < date2)
+                        return -1;
+                    if (date1 > date2)
+                        return 1;
+                    return 0;
+                }).forEach(function (fillup) {
                     data.push({
-                        fillupDate: moment(fillup.fillupDate).format("YYYY-MM-DD"),
+                        fillupDate: fillup.fillupDate,
                         mpg: parseFloat((fillup.miles / fillup.gallons).toFixed(3))
                     })
                 })
@@ -74,10 +81,12 @@ class FillUpDetails extends React.Component {
         return (
             <tr>
                 <td className="panel-body">
-                    <h4>Miles: {this.props.miles}</h4>
-                    <h4>Gallons: {this.props.gallons}</h4>
-                    <h4>Price: ${this.props.price}</h4>
-                    <h4>MPG: {(this.props.miles / this.props.gallons).toFixed(3)}</h4>
+                    <h3>MPG: {(this.props.miles / this.props.gallons).toFixed(3)}</h3>
+                    <h5>Miles: {this.props.miles}</h5>
+                    <h5>Gallons: {this.props.gallons}</h5>
+                    <h5>Price: ${this.props.price}</h5>
+                    <h5>Date: {this.props.fillupDate}</h5>
+
                 </td>
             </tr>
         );
@@ -92,12 +101,22 @@ class FillUpTable extends React.Component {
 
         for (var i = 0; i < vehicles.length; i++) {
             if (vehicles[i]._id === this.props.selectedVehicle) {
-                vehicles[i].fillups.forEach(function (fillup) {
+                // vehicles[i].fillups.forEach(function (fillup) {
+                vehicles[i].fillups.sort(function (a, b) {
+                    var date1 = a.fillupDate,
+                        date2 = b.fillupDate;
+                    if (date1 < date2)
+                        return 1;
+                    if (date1 > date2)
+                        return -1;
+                    return 0;
+                }).forEach(function (fillup) {
                     rows.push(
                         <FillUpDetails key={fillup._id}
                                        miles={fillup.miles}
                                        gallons={fillup.gallons}
                                        price={fillup.price}
+                                       fillupDate={fillup.fillupDate}
                         />
                     );
                 });
@@ -190,8 +209,6 @@ class VehicleFillUpTable extends React.Component {
         if (!this.props.curVehicle) {
             return (<div>State not yet assigned!</div>)
         }
-        console.log("this.props.vehicles: ", this.props.vehicles);
-        console.log("this.state.selectedVehicle: ", this.state.selectedVehicle);
         return (
             <div>
                 <VehicleSelector
@@ -225,18 +242,28 @@ export default class DisplayMPG extends React.Component {
     }
 
     componentWillMount() {
+        console.log("before axios");
         // Retrieve user/vehicle data from database
-        return axios.get('/api/get/fillups', {params: {user_id: this.context.user.username}})
+        axios.get('/api/get/fillups', {params: {user_id: this.context.user.username}})
             .then(function (results) {
+                console.log("after axios, before setState");
                 this.setState({
                     userVehicles: results.data[0].vehicles,
                     lastVehicleAccessed: results.data[0].lastVehicleAccessed
                 })
+                console.log("after axios, after setState");
+                console.log("userVehicles: ", this.state.userVehicles);
+                if(this.state.userVehicles.length === 0) {
+                    this.context.router.push('AddVehicle');
+                }
             }.bind(this));
     }
 
 
     render() {
+        console.log("render?");
+        console.log("userVehicles: ", this.state.userVehicles);
+
         if (!this.state.lastVehicleAccessed) {
             return (<div>Database call not finished!</div>)
         }
@@ -266,5 +293,6 @@ export default class DisplayMPG extends React.Component {
 
 DisplayMPG.contextTypes = {
     authenticated: React.PropTypes.bool,
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    router: React.PropTypes.object.isRequired
 };

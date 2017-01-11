@@ -25,8 +25,8 @@ ReactDOM.render(
         <HomeRoute path='/' component={Main}>
             {/*If user selects any other path... we get the IndexRoute*/}
             <IndexRoute component={IndexPage}/>
-            <LoginRoute path='SignIn' component={SignIn}/>
-            <Route path='SignUp' components={SignUp}/>
+            <LoginRoute path='/SignIn' component={SignIn}/>
+            <Route path='/SignUp' components={SignUp}/>
             <AuthenticatedRoute>
                 {/* Once the user signs in display fill up info*/}
                 <HomeRoute path='DisplayMpg' component={DisplayMpg}/>

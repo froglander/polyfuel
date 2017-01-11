@@ -21,7 +21,7 @@ export default class AddFillup extends React.Component {
             gallons: props.gallons,
             price: props.price,
             vehicle_id: props.vehicle_id,
-            fillupDate: moment(),
+            fillupDate: moment().format("YYYY-MM-DD"),
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,6 +73,9 @@ export default class AddFillup extends React.Component {
             .then(axios.spread(function (acct, perms) {
                 // According to documentation, both requests should now be complete
             }));
+
+        console.log("Do I reach this line");
+        this.context.router.push('/DisplayMpg');
     }
 
     onVehicleChange(vehicle_id) {
@@ -84,6 +87,10 @@ export default class AddFillup extends React.Component {
     render() {
         // console.log("Render add fill up component");
         // var date = new Date();
+        const today = Datetime.moment();
+        var valid = function (current) {
+            return current.isBefore(today);
+        };
 
         return (
             <DocumentTitle title={`Add Fill-Up`}>
@@ -98,7 +105,6 @@ export default class AddFillup extends React.Component {
                                     <form className="form-horizontal">
 
 
-
                                         <div className="form-group">
                                             <label htmlFor="date" className="col-sm-3 control-label">Date</label>
                                             <div className="col-sm-9">
@@ -109,6 +115,7 @@ export default class AddFillup extends React.Component {
                                                           dateFormat="YYYY-MM-DD"
                                                           value={this.state.fillupDate}
                                                           onChange={this.handleDateChange}
+                                                          isValidDate={valid}
 
                                                 />
                                             </div>
@@ -147,5 +154,6 @@ export default class AddFillup extends React.Component {
 
 AddFillup.contextTypes = {
     authenticated: React.PropTypes.bool,
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    router: React.PropTypes.object.isRequired
 };
