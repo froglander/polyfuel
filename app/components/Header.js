@@ -53,11 +53,12 @@ export default class Header extends React.Component {
                                 </li>
                             </NotAuthenticated>
 
-                            {/*<NotAuthenticated>*/}
-                                {/*<li>*/}
-                                    {/*<Link to="/SignUp">Sign Up</Link>*/}
-                                {/*</li>*/}
-                            {/*</NotAuthenticated>*/}
+                            {/* <NotAuthenticated>
+                                <li>
+                                    <Link to="/SignUp">Sign Up</Link>
+                                </li>
+                            </NotAuthenticated> */}
+
                             <Authenticated>
                                 <li>
                                     <LogoutLink/>
@@ -70,4 +71,3 @@ export default class Header extends React.Component {
         )
     }
 }
-
